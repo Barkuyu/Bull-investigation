@@ -10,8 +10,6 @@ document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length
 document.addEventListener('dblclick',p,s);
 addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault()},s);
 addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&/^[=+\-0]$/.test(e.key))e.preventDefault()});})();</script>
-
-
 <title>牛市生存戰 🐂</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -382,7 +380,7 @@ header{gap:8px}
 .cu-n.sel small,.cu-a.sel small{color:#5a4400}
 .cu-n:active,.cu-a:active{transform:scale(.96)}
 .cu-sum{margin-top:14px;font-size:15px;font-weight:900;letter-spacing:2px;color:#ffe08a}
-.cu-lab{margin-top:22px;margin-bottom:8px;font-size:14px;color:#cfd6e4;letter-spacing:2px}
+.cu-sec.off{opacity:.4}.cu-sec input:disabled{cursor:not-allowed;background:rgba(255,255,255,.05)}.cu-lab{margin-top:22px;margin-bottom:8px;font-size:14px;color:#cfd6e4;letter-spacing:2px}
 .cu-two{width:100%;max-width:340px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cu-a{box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;border-radius:14px;color:#fff;font-size:17px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#1a2233,#0e131d);border:2px solid #3a4560;cursor:pointer}
 .cfg-opt{box-sizing:border-box;position:relative;display:flex;align-items:center;gap:14px;width:100%;padding:12px 18px;border-radius:16px;text-align:left;color:#fff;background:linear-gradient(135deg,#1a2233,#0e131d);border:2px solid #3a4560;cursor:pointer;font:inherit;transition:transform .12s,border-color .2s,background .2s}
@@ -732,7 +730,7 @@ body.th-bunny .assets,body.th-bunny .chart-card,body.th-bunny .event-zone{backgr
 /* Mike 專屬牌數值（單一來源；卡面文字由此帶入） */
 const MK={calfBuy:.6,calfUp:.2,dipBuy:.5,dipBonus:.3,wage:3000,reapSell:.5,reapBonus:.1,clearSell:.3,clearCash:1500,cashout:.5,snack:1500,
  ipoP:.55,ipoUp:.5,ipoDn:.08,memeBuy:.4,memeP:.4,lastBehind:3,lastAhead:1.5,grit:1.5,knifeBuy:.6,knifeBonus:.25,peakSell:.4,peakBonus:.06,ootd:.06,
- again:5000,streakStep:800,streakCap:4800,hype:2500,ex3:7000,ex2:2500,xp:1000,xpCap:8,streamUp:3000,streamDn:1200,cheer:.4};
+ again:5000,streakStep:800,streakCap:4800,hype:2500,ex3:7000,ex2:2500,xp:2000,xpCap:8,streamUp:3000,streamDn:1200,cheer:.4};
 /* Eric 專屬牌數值 */
 const EK={grant:3000,lecture:1500,column:2700,senior:700,hypoUp:4,award:4000,auth:1500,prophecy:4000,swanDn:6000,swanUp:3000,patentNow:2000,patentNext:2500,attrib:1.4,truce:.5,nobelMin:.15};
 const INTERF=['fakenews','garble','conspiracy','lag','forged','histrep','archive','cycle','regime','cb','summit','attrib','crisispr','truce','nobel'],EV_K=['histrep','archive','cycle','regime','cb','summit','crisispr','nobel','attrib','truce'],SIG_K=['fakenews','garble','conspiracy','lag'];
@@ -752,6 +750,7 @@ const CARDS={
   small_sell:{e:'📤',n:'小額出場',t:'fund',d:'賣出 30% 持倉換成現金'},
   big_buy:{e:'📥',n:'高額試險',t:'fund',d:'70% 現金買入持倉'},
   big_sell:{e:'📤',n:'高額逃跑',t:'fund',d:'賣出 70% 持倉換成現金'},
+  harvest:{e:'📤',n:'背水收割',t:'fund',d:'本月按順序先計算完持倉部位盈虧後再全數收回成現金。'},
   gambler:{e:'⚜️',n:'亡命賭徒',t:'risk',d:'現有現金通通買入持倉後，本月漲跌 ×4；跌 12.5% 以上就爆倉歸零'},
   pundit:{e:'👨🏻‍💻',n:'幣圈名嘴',t:'info',d:'支付現金800，能以 75% 準確度預知下個月的市場事件名稱'},
   riskctl:{e:'💼',n:'風險控制',t:'risk',d:'支付現金1600，本月下跌不虧損。'},
@@ -777,8 +776,8 @@ const CARDS={
   panic:{e:'🗣️',n:'恐慌製造機',t:'tech',d:'其他玩家下回合鏈上訊號必定顯示「下跌」'},
   nosell:{e:'🚫',n:'禁賣令',t:'tech',d:'付 $1,000，本回合對手無法出倉'},
   siphon:{e:'🧲',n:'抽水',t:'tech',d:'本月所有對手各被收走約 1.6% 現金（5% 的 1/3，捨至百位），轉給你'},
-  darkfog:{e:'🌫️',n:'暗網迷霧',t:'tech',d:'其他玩家未來 3 個月，持倉、現金與損益金額顯示「？」'},
-  scramble:{e:'🔣',n:'亂碼注入',t:'tech',d:'其他玩家未來 3 個月，手牌名稱與效果顯示「？」'},
+  darkfog:{e:'🌫️',n:'暗網迷霧',t:'tech',d:'其他玩家未來 3 個月，持倉、現金與損益金額顯示「？？？？？？」'},
+  scramble:{e:'🔣',n:'亂碼注入',t:'tech',d:'其他玩家未來 3 個月，手牌名稱與效果顯示「？？？？？？」'},
   phish:{e:'🎣',n:'釣魚偽裝',t:'tech',d:'下個月其他玩家的手牌外觀會偽裝成自己牌庫的其中一張牌，且必定與原本那張牌不同'},
   ransom:{e:'🔐',n:'勒索軟體',t:'tech',d:'隨機扣押其他玩家一半牌庫，直到對方單月持倉獲利 ≥ $10,000 才歸還'},
   ddos:{e:'🌊',n:'DDoS 封鎖',t:'tech',d:'其他玩家未來 2 個月，每回合只能出 1 張牌'},
@@ -786,29 +785,29 @@ const CARDS={
   mitm:{e:'🔀',n:'中間人攻擊',t:'tech',d:'下個月其他玩家的進倉牌變出倉、出倉牌變進倉'},
   skimmer:{e:'💳',n:'側錄木馬',t:'tech',d:'對手本月每打出 1 張資金調度牌，你得 $700（最多 6 張）'},
   scraper:{e:'🕷️',n:'爬蟲採集',t:'tech',d:'對手本月每打出 1 張牌，你得 $350（最多 8 張）'},
-  wallet:{e:'👛',n:'錢包竊取',t:'tech',d:'偷走資產最高對手 4% 的現金，轉給你'},
+  wallet:{e:'👛',n:'錢包竊取',t:'tech',d:'偷走資產最高對手 4% 的持倉，轉成現金給你'},
   credstuff:{e:'🔑',n:'撞庫攻擊',t:'tech',d:'現金 ≥ $5,000 的對手各被偷 $1,000，轉給你'},
-  lockdown:{e:'🔒',n:'帳戶凍結',t:'tech',d:'付 $800，本回合對手無法使用進倉牌'},
-  breach:{e:'🧨',n:'防禦擊穿',t:'tech',d:'付 $600，本回合對手的防禦類牌失效'},
+  lockdown:{e:'🔒',n:'帳戶凍結',t:'tech',d:'本回合對手無法使用進倉牌'},
+  breach:{e:'🧨',n:'防禦擊穿',t:'tech',d:'本回合對手的防禦類牌失效'},
   honeypot:{e:'🍯',n:'蜜罐陷阱',t:'tech',d:'本回合免疫對手的攻擊牌，每擋下 1 張得 $1,500（最多 3 張）'},
   hijack:{e:'⛏️',n:'劫持算力',t:'tech',d:'本月所有對手各被劫走 3% 持倉，換成現金給你'},
   exploit:{e:'🐛',n:'零時差漏洞',t:'tech',d:'對手本月每打出 1 張 All in／開槓桿／亡命賭徒，你得 $2,500（最多 4 張）'},
-  bounty:{e:'💰',n:'賞金任務',t:'tech',d:'本月你每打出 1 張其他技術操作牌，得 $800'},
-  proxy:{e:'🛰️',n:'代理跳板',t:'tech',d:'不佔出牌額度，入帳 $800'},
+  bounty:{e:'💰',n:'賞金任務',t:'tech',d:'不佔出牌額度，本月你每打出 1 張其他技術操作牌，得 $800'},
+  proxy:{e:'🛰️',n:'代理跳板',t:'tech',d:'不佔出牌額度，入帳 $1,450'},
   socialeng:{e:'🎭',n:'社交工程',t:'tech',d:'月初總資產比你高的對手，每人給你 $1,000'},
-  ledger:{e:'📒',n:'竄改帳本',t:'tech',d:'付 $1,000，本月持倉虧損時，補回虧損的 50%'},
-  coldwallet:{e:'🧊',n:'冷錢包',t:'tech',d:'付 $600，本月下跌時持倉只承受 30% 跌幅'},
-  encrypt:{e:'🔏',n:'加密隧道',t:'tech',d:'付 $800，本月跌幅最多只算 12%'},
-  backupdr:{e:'💾',n:'異地備份',t:'tech',d:'付 $500，本月若下跌，下個月月初補回虧損的 40%'},
-  datashift:{e:'🧮',n:'竄改數據',t:'tech',d:'付 $800，下個月市場事件的漲跌幅 +8%'},
-  miner:{e:'🖥️',n:'挖礦木馬',t:'tech',d:'付 $1,200，之後每個月月初入帳 $400'},
+  ledger:{e:'📒',n:'竄改帳本',t:'tech',d:'本月持倉虧損時，補回虧損的 50%'},
+  coldwallet:{e:'🧊',n:'冷錢包',t:'tech',d:'本月下跌時持倉只承受 30% 跌幅'},
+  encrypt:{e:'🔏',n:'加密隧道',t:'tech',d:'本月跌幅最多只算 8%'},
+  backupdr:{e:'💾',n:'異地備份',t:'tech',d:'本月若下跌，下個月月初補回虧損的 40%'},
+  datashift:{e:'🧮',n:'竄改數據',t:'tech',d:'下個月市場事件的漲跌幅 +8%'},
+  miner:{e:'🖥️',n:'挖礦木馬',t:'tech',d:'之後每個月月初入帳 $400'},
   frontrun:{e:'🏎️',n:'搶先交易',t:'tech',d:'本月每打出 1 張進倉牌，上漲時持倉額外 +3%（最多 3 張）'},
   blackdeal:{e:'🕳️',n:'黑市變現',t:'tech',d:'賣出 60% 持倉，並多拿 8% 溢價'},
   bugbounty:{e:'🐞',n:'漏洞賞金',t:'tech',d:'本月漲跌幅達 ±15% 以上，入帳 $3,000'},
-  backdoor:{e:'🚪',n:'植入後門',t:'tech',d:'付 $700，之後 3 個月每個月月初持倉 +3%'},
+  backdoor:{e:'🚪',n:'植入後門',t:'tech',d:'之後 3 個月每個月月初持倉 +3%'},
   vulnscan:{e:'🔍',n:'漏洞掃描',t:'tech',d:'本月下跌入帳 $3,000，上漲入帳 $1,000'},
-  hashlease:{e:'🏭',n:'算力租賃',t:'tech',d:'付 $1,000，下個月月初入帳 $3,000'},
-  pumpbot:{e:'🛸',n:'拉盤腳本',t:'tech',d:'付 $600，本月上漲時漲幅 ×1.4'},
+  hashlease:{e:'🏭',n:'算力租賃',t:'tech',d:'下個月月初入帳 $3,000'},
+  pumpbot:{e:'🛸',n:'拉盤腳本',t:'tech',d:'本月上漲時漲幅 ×1.4'},
   smear:{e:'🕴️',n:'放出黑函',t:'tech',d:'付 $600，下個月必定發生「大跌類」事件'},
   quant:{e:'🤖',n:'量化機器人',t:'tech',d:'付 $300，本月持倉若上漲，額外再多 50% 的漲幅'},
   arb:{e:'🔗',n:'鏈上套利',t:'tech',d:'付 $600，本月市場若上漲，持倉額外 +14%；若下跌，持倉額外 -6%'},
@@ -818,7 +817,7 @@ const CARDS={
   comeback:{e:'🦅',n:'Comeback 翻身',t:'risk',note:'與槓桿類牌、避險類牌無法同回合使用',d:`現金全數買入持倉；若總資產低於起始資金，本月上漲 ×${OGK.cbUp}、下跌只承受 ${$p(OGK.cbDn)}；否則漲跌 ×${OGK.cbAhead}（不爆倉）`},
   dissbear:{e:'🐻‍❄️',n:'熊市 Diss',t:'risk',note:'與槓桿類牌、避險類牌無法同回合使用',d:`本月持倉損益與市場相反 ×${OGK.dsX}：下跌賺 ${OGK.dsX} 倍、上漲賠 ${OGK.dsX} 倍；上漲 ${$p(OGK.dsLiq)} 以上就爆倉歸零`},
   bullrun:{e:'🐂',n:'牛市衝鋒',t:'fund',d:`用 ${$p(OGK.bullBuy)} 現金買入持倉，本月市場若上漲，持倉再額外多賺 ${$p(OGK.bullUp)}`},
-  micdrop:{e:'🔇',n:'Mic Drop 離場',t:'fund',d:`賣出全部持倉，並多拿賣出金額 ${$p(OGK.micBonus)} 的離場紅利`},
+  micdrop:{e:'🔇',n:'Mic Drop',t:'fund',d:`賣出全部持倉，並多拿賣出金額 ${$p(OGK.micBonus)} 的離場紅利`},
   bearexit:{e:'🏳️',n:'熊市撤退',t:'fund',d:`賣出 ${$p(OGK.exSell)} 持倉，並再入帳 ${$n(OGK.exCash)}`},
   survivor:{e:'🧗',n:'312 倖存者',t:'risk',d:`本月市場跌幅若達 ${$p(OGK.survThr)} 以上，持倉（含槓桿，不會爆倉）只承受 ${$p(OGK.surv)} 的跌幅`},
   royalty:{e:'💿',n:'專輯版稅',t:'info',d:`之後每個月月初固定入帳現金 +${$n(OGK.royalty)}（直到遊戲結束）`},
@@ -838,10 +837,10 @@ const CARDS={
   bothways:{e:'🤝',n:'敢拿敢放',t:'info',d:`本月同時打出進倉牌與出倉牌（含本牌以外），現金 +${$n(OGK.both)}`},
   hookr:{e:'🪝',n:'洗腦 Hook',t:'info',d:`本月每打出 1 張其他風險類牌，現金 +${$n(OGK.hook)}`},
   /* Eric 專屬牌 */
-  fakenews:{e:'📰',n:'假新聞',t:'infl',d:'其他玩家下個月的鏈上訊號顯示與實際事件相反的方向（單人模式：改為你下個月的鏈上訊號必定準確）'},
-  garble:{e:'✂️',n:'斷章取義',t:'infl',d:'其他玩家下個月的鏈上訊號必定顯示「混亂」（單人模式：改為你下個月的鏈上訊號必定準確）'},
-  conspiracy:{e:'👽',n:'陰謀論',t:'infl',d:'其他玩家下個月的鏈上訊號顯示與本月市場相反的方向（單人模式：改為你下個月的鏈上訊號必定準確）'},
-  lag:{e:'🕰️',n:'報導時差',t:'infl',d:'其他玩家下個月的鏈上訊號顯示的是本月的市場方向（單人模式：改為你下個月的鏈上訊號必定準確）'},
+  fakenews:{e:'📰',n:'假新聞',t:'infl',d:'其他玩家下個月的鏈上訊號顯示與實際事件相反的方向（單人模式：本月漲幅若未超過 30%，實際盈利 ×2）'},
+  garble:{e:'✂️',n:'斷章取義',t:'infl',d:'其他玩家下個月的鏈上訊號必定顯示「混亂」（單人模式：本月跌幅若超過 30%，實際虧損 ×0.5）'},
+  conspiracy:{e:'👽',n:'陰謀論',t:'infl',d:'其他玩家下個月的鏈上訊號顯示與本月市場相反的方向（單人模式：從本回合結算起，每回合入帳 $500，之後每多一個月多 $500，共 5 個月）'},
+  lag:{e:'🕰️',n:'報導時差',t:'infl',d:'其他玩家下個月的鏈上訊號顯示的是本月的市場方向（單人模式：無視本月已決定的事件，本月事件改為上個月的事件）'},
   forged:{e:'🗂️',n:'偽造文件',t:'infl',d:'其他玩家接下來連續 3 個月收到的事件預告全部是假的（單人模式：改為預知下個月的市場事件）'},
   histrep:{e:'🏺',n:'歷史重演',t:'infl',d:'下個月的市場事件與本月相同類型（重新抽出漲跌幅，所有玩家）'},
   archive:{e:'🗄️',n:'古籍考證',t:'infl',d:'下個月的市場事件與上個月相同類型（重新抽出漲跌幅，所有玩家）'},
@@ -860,7 +859,7 @@ const CARDS={
   hypo:{e:'🧬',n:'大膽假設',t:'risk',note:'與槓桿類牌、避險類牌無法同回合使用',d:`現金全數買入持倉；本月上漲時漲幅 ×${EK.hypoUp}，下跌時照原本跌幅承受（不爆倉）`},
   award:{e:'🏆',n:'學術獎項',t:'info',d:`本月總資產若比月初增加，現金 +${$n(EK.award)}`},
   authority:{e:'🧑‍🏫',n:'權威加成',t:'info',d:`本月每打出 1 張本角色的資訊干擾牌，現金 +${$n(EK.auth)}`},
-  prophecy:{e:'🔔',n:'預言應驗',t:'info',d:`本月事件若在上個月已被你預知（且預知正確），現金 +${$n(EK.prophecy)}`},
+  prophecy:{e:'🔔',n:'預言應驗',t:'info',d:`本月的鏈上訊號若與上個月相同，現金 +${$n(EK.prophecy)}；不同則扣 $500`},
   swan:{e:'🦢',n:'「類」黑天鵝預言',t:'info',d:`本月市場跌幅達 20% 以上，現金 +${$n(EK.swanDn)}；漲幅達 20% 以上，現金 +${$n(EK.swanUp)}`},
   patent:{e:'💡',n:'專利授權金',t:'info',d:`現金 +${$n(EK.patentNow)}，下個月月初再 +${$n(EK.patentNext)}`},
   /* Mike 專屬牌 */
@@ -870,7 +869,7 @@ const CARDS={
   reap:{e:'🌾',n:'獲利了結',t:'fund',d:`賣出 ${$p(MK.reapSell)} 持倉，並多拿賣出金額 ${$p(MK.reapBonus)} 的獲利加成`},
   clear:{e:'🧺',n:'減倉變現',t:'fund',d:`賣出 ${$p(MK.clearSell)} 持倉，二手拍賣再入帳 ${$n(MK.clearCash)}`},
   cashout:{e:'🧾',n:'利潤提領',t:'fund',d:`本月持倉若獲利，把獲利的 ${$p(MK.cashout)} 直接提領成現金`},
-  snack:{e:'🍡',n:'手續費返還',t:'fund',d:`現金 +${$n(MK.snack)}（不佔出牌額度）`},
+  snack:{e:'🍡',n:'手續費返還',t:'fund',d:`現金 +${$n(MK.snack)}`},
   ipo:{e:'🎟️',n:'IPO 申購',t:'risk',d:`付 $300，持倉本月 ${$p(MK.ipoP)} 機率額外 +${$p(MK.ipoUp)}，${$p(1-MK.ipoP)} 機率額外 −${$p(MK.ipoDn)}`},
   meme:{e:'🐕',n:'山寨幣探險',t:'risk',d:`用 ${$p(MK.memeBuy)} 現金買入持倉；${$p(MK.memeP)} 機率持倉本月翻倍，${$p(1-MK.memeP)} 機率照原本行情`},
   lastshot:{e:'🔥',n:'翻身槓桿',t:'risk',note:'與槓桿類牌、避險類牌無法同回合使用',d:`現金全數買入持倉；若總資產低於起始資金，本月漲跌 ×${MK.lastBehind}，否則 ×${MK.lastAhead}（不爆倉）`},
@@ -879,11 +878,11 @@ const CARDS={
   peak:{e:'⛰️',n:'逃頂減倉',t:'risk',d:`本月市場若上漲，月底賣出 ${$p(MK.peakSell)} 持倉，並多拿 ${$p(MK.peakBonus)} 加成`},
   ootd:{e:'👟',n:'質押收益',t:'risk',d:`質押持倉賺利息，本月持倉不論漲跌，額外 +${$p(MK.ootd)}`},
   again:{e:'🔁',n:'補倉基金',t:'info',d:`本月總資產若下跌，下個月月初現金 +${$n(MK.again)}`},
-  streak:{e:'🏅',n:'連陽獎勵',t:'info',d:`每連續上漲 1 個月，現金 +${$n(MK.streakStep)}（最多 ${$n(MK.streakCap)}，此牌不占出牌額度）`},
+  streak:{e:'🏅',n:'連陽獎勵',t:'info',d:`每連續上漲 1 個月，現金 +${$n(MK.streakStep)}（最多 ${$n(MK.streakCap)}）`},
   hype:{e:'📣',n:'成交量放大',t:'info',d:`若上個月結果為虧損，本月每打出 1 張進倉牌，現金 +${$n(MK.hype)}`},
   xp:{e:'🎒',n:'韭菜進化',t:'info',d:`每經歷過 1 個資產下跌的月份，現金 +${$n(MK.xp)}（最多算 ${MK.xpCap} 次）`},
   stream:{e:'📺',n:'直播帶單',t:'info',d:`本月市場上漲，現金 +${$n(MK.streamUp)}；下跌，現金 +${$n(MK.streamDn)}`},
-  cheer:{e:'🎉',n:'喊單造勢',t:'infl',d:`付 $600，下個月市場事件若為下跌，跌幅縮小為 ${$p(MK.cheer)}（所有玩家）`},
+  cheer:{e:'🎉',n:'喊單造勢',t:'infl',d:`付 $600，下個月市場事件若為下跌，跌幅縮小為 ${$p(MK.cheer)}（僅自己）`},
   /* D.T. 專屬牌 */
   dealbuy:{e:'📝',n:'簽約建倉',t:'fund',d:'用 60% 現金買入持倉，簽約金再入帳 $800'},
   dealsell:{e:'🏷️',n:'併購脫手',t:'fund',d:'賣出 60% 持倉，並額外多拿賣出金額的 8% 當溢價'},
@@ -971,7 +970,7 @@ const isTech=k=>CARDS[k].t==='tech';
 const INV={allin:'exit',exit:'allin',dca:'tp',tp:'dca',small_buy:'small_sell',small_sell:'small_buy',big_buy:'big_sell',big_sell:'big_buy'};
 /* 手牌中「技術操作」牌最多一張：回傳牌庫中第一張可抽的牌的位置 */
 /* 每回合手牌保底：至少一張「進倉」與一張「出倉」牌 */
-const BUY_K=['freestyle','comeback','bullrun','hypo','calf','dip','meme','lastshot','dealbuy','bigbet','allin','dca','small_buy','big_buy','dcaplan'],SELL_K=['blackdeal','micdrop','bearexit','topsell','reap','clear','dealsell','flip','exit','tp','small_sell','big_sell'];
+const BUY_K=['freestyle','comeback','bullrun','hypo','calf','dip','meme','lastshot','dealbuy','bigbet','allin','dca','small_buy','big_buy','dcaplan'],SELL_K=['harvest','blackdeal','micdrop','bearexit','topsell','reap','clear','dealsell','flip','exit','tp','small_sell','big_sell'];
 function ensureBS(hand,deck,ntl,ex){
   /* A類（資金調度）：每回合手牌恰好兩張——一張與上漲有關（進倉）、一張與下跌有關（出倉）；D.T. 例外 */
   const isA=k=>CARDS[k]&&CARDS[k].t==='fund',AB=k=>isA(k)&&BUY_K.includes(k),AS=k=>isA(k)&&SELL_K.includes(k);
@@ -1063,8 +1062,8 @@ const DECK_SETUP={allin:2,dca:4,tp:4,exit:2,lev:3,hedge:3,alpha:2,airdrop:2,smal
 const fl100=x=>Math.floor(x/100)*100;
 /* S•͈ᴗ•͈uᥫᩣ 專屬牌數值 */
 const BP={carrot:.15,win:4500,lose:2000,list:5000,bunny:.12,stub:.7,coupon:2500,bowFrac:.8,bowX:1.5,plan:.25};
-const COST={coldwallet:600,encrypt:800,backupdr:500,datashift:800,miner:1200,backdoor:700,hashlease:1000,pumpbot:600,lockdown:800,breach:600,ledger:1000,ipo:300,cheer:600,kline:500,crown:800,backroom:300,reorg:400,decree:1000,algo:400,plan:200,quant:300,arb:600,whale:450,paper:500,spin:300,challenge:600,anti:800,field:0,pundit:800,riskctl:1600,insure:1000,politician:1600,stoploss:300,revive:300,analyst:500,foresight:600,spy:300,rehand:100,nosell:1000,reroll:1000,smear:600};
-const SELL=['blackdeal','tp','exit','small_sell','big_sell','reap','clear','micdrop','bearexit','topsell'];
+const COST={ipo:300,cheer:600,kline:500,crown:800,backroom:300,reorg:400,decree:1000,algo:400,plan:200,quant:300,arb:600,whale:450,paper:500,spin:300,challenge:600,anti:800,field:0,pundit:800,riskctl:1600,insure:1000,politician:1600,stoploss:300,revive:300,analyst:500,foresight:600,spy:300,rehand:100,nosell:1000,reroll:1000,smear:600};
+const SELL=['harvest','blackdeal','tp','exit','small_sell','big_sell','reap','clear','micdrop','bearexit','topsell'];
 const LEVG=['lev','gambler','fomo','bowlev','bigbet','lastshot','hypo','freestyle','comeback','dissbear'],PROT=['hedge','riskctl'],HEDGE_ALL=['hedge','riskctl','insure'];
 /* 同回合不能一起打出：槓桿類彼此互斥；穩定險與風險控制互斥；槓桿類與所有避險工具互斥；放空熊與槓桿類／避險類互斥；分散投資與槓桿類互斥；追高情緒與出倉類互斥 */
 function conflict(keys){
@@ -1077,7 +1076,7 @@ function conflict(keys){
   return false;
 }
 /* 出牌張數：依角色（目前皆為 3 張）；額外行動不佔額度，有它時其他牌可多出 1 張 */
-const FREE_K=['snack','proxy','streak'];
+const FREE_K=['proxy','bounty'];
 const NOBUY=[...BUY_K,'lev','gambler','fomo'],DEFK=['hedge','riskctl','insure','stoploss','revive','whale'],isSh=e=>e.k.some(x=>x==='firewall'||x==='wall'||x==='honeypot');
 const nonExtra=keys=>keys.filter(k=>k!=='extra'&&!FREE_K.includes(k)).length;
 const crMax=()=>(MP.on&&cr().mp&&cr().mp.max)||cr().max;
@@ -1174,7 +1173,7 @@ let ROUNDS=18,START_CASH=10000,MP_SEC=40;const LB_KEY='bull-market-leaderboard';
 const CFG_R=[8,12,18,24],CFG_C=[8000,12000,16000,20000];
 function applyCfg(c){const r=c&&CFG_R.includes(+c.rounds)?+c.rounds:18,m=c&&CFG_C.includes(+c.cash)?+c.cash:10000,sc=c&&Number.isInteger(+c.sec)&&+c.sec>=1&&+c.sec<=999?+c.sec:40;ROUNDS=r;START_CASH=m;MP_SEC=sc;const t=document.getElementById('roundTot');if(t)t.textContent=r;return{rounds:r,cash:m,sec:sc}}
 let S=null,memLb=[];
-const MP={live:{},on:false,role:null,peer:null,hostConn:null,players:[],started:false,code:'',evs:[],sigs:[],seed:0,tm:null,tl:20,name:'',key:'',kc:0,hr:1,pending:null,pr:0,wt:null,mylog:[],vres:{},roster:[],chartDone:false,cwt:null,ar:1,tgo:0,gateR:0,gateS:null,gt:null,plays:{},careers:{},careerGo:false,myCareer:null,ct:null,cwt2:null,vsbot:false,vsStage:0,vsTok:0,endR:0,vsN:1,vsAuto:false,bk:1,diff:1,hell:[],endWho:''};
+const MP={vsTimer:0,live:{},on:false,role:null,peer:null,hostConn:null,players:[],started:false,code:'',evs:[],sigs:[],seed:0,tm:null,tl:20,name:'',key:'',kc:0,hr:1,pending:null,pr:0,wt:null,mylog:[],vres:{},roster:[],chartDone:false,cwt:null,ar:1,tgo:0,gateR:0,gateS:null,gt:null,plays:{},careers:{},careerGo:false,myCareer:null,ct:null,cwt2:null,vsbot:false,vsStage:0,vsTok:0,endR:0,vsN:1,vsAuto:false,bk:1,diff:1,hell:[],endWho:''};
 /* 鏈上訊號：混亂 18%；實際方向給出正確訊號 43.33%，兩個錯誤訊號各 19.33%（三種訊號平均多分得原混亂機率的差值） */
 const SIG_NOISE=.18,SIG_A=13/30,SIG_W=29/150;
 function mkRng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -1240,7 +1239,9 @@ function makeState(isMP,key){
 }
 function newGame(){S=makeState(MP.on,MP.key)}
 function stepRound(sel,hodl,tbl){
-  const ev=S.next,R=S.R,played0=hodl?[]:sel.map(i=>S.hand[i]),notes=[];
+  let ev=S.next;const R=S.R,played0=hodl?[]:sel.map(i=>S.hand[i]),notes=[];
+  const sigNow=S.sigFix||(MP.on?MP.sigs[S.round-1]:S.sig)||null;
+  if(!MP.on&&played0.includes('lag')&&S.lastEv)ev=S.lastEv;/* 報導時差（單人）：本月事件改為上個月的事件 */
   const snapC=S.cash,snapP=S.pos;
   /* 其他玩家本回合出的牌與月初資產（多人遊戲由主辦者統一廣播） */
   const othE=Object.entries(tbl||{}).filter(([k])=>k!==S.key).map(([key,v])=>({key,k:Array.isArray(v&&v.k)?v.k:[],c:+(v&&v.c)||0,p:+(v&&v.p)||0}));
@@ -1264,7 +1265,7 @@ function stepRound(sel,hodl,tbl){
   if(siphonN>0){const sa=siphonN*fl100(snapC*.05/3);take(sa);notes.push(`🧲 被抽水，損失 ${fmt(sa)}`)}
   if(tariffN>0){const ta=tariffN*fl100(snapC*.03);take(ta);notes.push(`🧱 被課關稅，損失 ${fmt(ta)}`)}
   for(const e of oth){
-    if(e.k.includes('wallet')&&richOf(e.key)===S.key){const a=fl100(snapC*.04);take(a);notes.push(`👛 被竊取錢包，損失 ${fmt(a)}`)}
+    if(e.k.includes('wallet')&&richOf(e.key)===S.key){const a=Math.min(S.pos,fl100(snapP*.04));S.pos-=a;if(a>0)notes.push(`👛 錢包被竊取，持倉少了 ${fmt(a)}`)}
     if(e.k.includes('credstuff')&&snapC>=5000){take(1000);notes.push(`🔑 被撞庫，損失 ${fmt(1000)}`)}
     if(e.k.includes('hijack')){const a=Math.min(S.pos,fl100(snapP*.03));S.pos-=a;if(a>0)notes.push(`⛏️ 算力被劫持，持倉少了 ${fmt(a)}`)}
   }
@@ -1287,7 +1288,7 @@ function stepRound(sel,hodl,tbl){
       insider=false,pundit=false,analyst=false,foresight=false,spy=false,rehand=false,revive=false,roulette=false,bullD=false,bearD=false,
       quant=false,arb=false,whale=false,fateK=null,klineHit=false,bigHit=false,reorgHit=false,backHit=false,crownHit=false,negoHit=false,auditN=0,tallyHit=false,decreeSelf=false,algoN=0,carrotN=0,planHit=false,couponHit=false,bow=false,stubbornHit=false,bunnyN=0,listHit=false,paid=0,paperSelf=false,spinSelf=false,antiSelf=false,peer=false,endorse=false,cite=false,fieldSelf=false,infoPaid=0,
       ledgerHit=false,coldHit=false,encHit=false,backHit2=false,dshift=false,frontN=0,bbHit=false,vsHit=false,pumpHit=false,polSelf=false,smearSelf=false,rerollSelf=false,reliefSelf=false,worldSelf=false,blackAlpha=false,soldFlag=false,flashIdx=[],swapped=0,invalid=false;
-  let chalLeft=cnt0('challenge');
+  let chalLeft=cnt0('challenge'),harvestHit=false;
   const tot0=S.lastTotal,gritOn=!!S.grit;S.grit=false;
   let loanPend=0,battleRes=[],fsH=false,cbH=false,cbBehind=false,dsH=false,bullN=0,svH=false,topAmt=0,stormHit=false,cycHit=false,platHit=false,fansHit=false,verseHit=false,beatHit=false,hookHit=false,hypoH=false,awardHit=false,prophHit=false,swanHit=false,forgedSolo=false,calfN=0,cashoutHit=false,ipoHit=false,memeHit=false,lastH=false,lastBehind=false,gritHit=false,knifeHit=false,peakHit=false,ootdN=0,againHit=false,streakHit=false,hypeHit=false,exploreHit=false,xpHit=false,streamHit=false,cheerSelf=false;
   const buy=(f,lb)=>{const a=S.cash*f;S.pos+=a;S.cash-=a;notes.push(`${lb} ${fmt(a)}`)};
@@ -1350,18 +1351,18 @@ function stepRound(sel,hodl,tbl){
     else if(k==='siphon'){
       const g=othE.filter(e=>!isSh(e)).reduce((t,e)=>t+fl100(e.c*.05/3),0);S.cash+=g;notes.push(`🧲 抽水：從對手身上收走 ${fmt(g)}`)}
     else if(k==='firewall'){}
-    else if(k==='coldwallet'){coldHit=true;notes.push(`🧊 支付 ${fmt(cost)} 轉入冷錢包`)}
-    else if(k==='encrypt'){encHit=true;notes.push(`🔏 支付 ${fmt(cost)} 建立加密隧道`)}
-    else if(k==='backupdr'){backHit2=true;notes.push(`💾 支付 ${fmt(cost)} 異地備份`)}
-    else if(k==='datashift'){dshift=true;notes.push(`🧮 支付 ${fmt(cost)} 竄改下個月的行情數據`)}
-    else if(k==='miner'){S.income=(S.income||0)+400;notes.push(`🖥️ 支付 ${fmt(cost)} 植入挖礦木馬，之後每月月初入帳 ${fmt(400)}`)}
+    else if(k==='coldwallet'){coldHit=true;notes.push(`🧊 轉入冷錢包`)}
+    else if(k==='encrypt'){encHit=true;notes.push(`🔏 建立加密隧道`)}
+    else if(k==='backupdr'){backHit2=true;notes.push(`💾 異地備份`)}
+    else if(k==='datashift'){dshift=true;notes.push(`🧮 竄改下個月的行情數據`)}
+    else if(k==='miner'){S.income=(S.income||0)+400;notes.push(`🖥️ 植入挖礦木馬，之後每月月初入帳 ${fmt(400)}`)}
     else if(k==='frontrun'){frontN=Math.min(3,played.filter(x=>BUY_K.includes(x)).length);notes.push('🏎️ 搶先交易：卡位本月進倉單')}
     else if(k==='blackdeal'){const a=S.pos*.6;sell(.6,'🕳️ 黑市變現');S.cash+=a*.08;notes.push(`🕳️ 黑市溢價 +${fmt(a*.08)}`)}
     else if(k==='bugbounty'){bbHit=true;notes.push('🐞 提交漏洞回報，等待賞金')}
-    else if(k==='backdoor'){S.bd=3;notes.push(`🚪 支付 ${fmt(cost)} 植入後門，之後 3 個月月初持倉 +3%`)}
+    else if(k==='backdoor'){S.bd=3;notes.push(`🚪 植入後門，之後 3 個月月初持倉 +3%`)}
     else if(k==='vulnscan'){vsHit=true;notes.push('🔍 漏洞掃描中')}
-    else if(k==='hashlease'){S.bonus2=(S.bonus2||0)+3000;notes.push(`🏭 支付 ${fmt(cost)} 出租算力，下個月月初入帳 ${fmt(3000)}`)}
-    else if(k==='pumpbot'){pumpHit=true;notes.push(`🛸 支付 ${fmt(cost)} 啟動拉盤腳本`)}
+    else if(k==='hashlease'){S.bonus2=(S.bonus2||0)+3000;notes.push(`🏭 出租算力，下個月月初入帳 ${fmt(3000)}`)}
+    else if(k==='pumpbot'){pumpHit=true;notes.push(`🛸 啟動拉盤腳本`)}
     else if(k==='darkfog')notes.push('🌫️ 暗網迷霧：其他玩家未來 3 個月看不到自己的金額');
     else if(k==='scramble')notes.push('🔣 亂碼注入：其他玩家未來 3 個月看不到手牌內容');
     else if(k==='phish')notes.push('🎣 釣魚偽裝：其他玩家下個月的手牌外觀會被偽裝成別張牌');
@@ -1371,17 +1372,17 @@ function stepRound(sel,hodl,tbl){
     else if(k==='mitm')notes.push('🔀 中間人攻擊：其他玩家下個月進倉與出倉互換');
     else if(k==='skimmer'){const n=Math.min(6,othE.filter(e=>!isSh(e)).reduce((t,e)=>t+e.k.filter(x=>CARDS[x]&&CARDS[x].t==='fund').length,0)),g=n*700;S.cash+=g;notes.push(`💳 側錄木馬：側錄到 ${n} 張資金調度牌，入帳 ${fmt(g)}`)}
     else if(k==='scraper'){const n=Math.min(8,othE.filter(e=>!isSh(e)).reduce((t,e)=>t+e.k.length,0)),g=n*350;S.cash+=g;notes.push(`🕷️ 爬蟲採集：蒐集到 ${n} 張牌的資料，入帳 ${fmt(g)}`)}
-    else if(k==='wallet'){const o=othE.filter(e=>e.key===richOf(S.key));const g=o.length&&!isSh(o[0])?fl100(o[0].c*.04):0;S.cash+=g;notes.push(`👛 錢包竊取：${g?'從 '+esc(nameOf(o[0].key))+' 偷走 '+fmt(g):'目標有防護，什麼都沒偷到'}`)}
+    else if(k==='wallet'){const o=othE.filter(e=>e.key===richOf(S.key));const g=o.length&&!isSh(o[0])?fl100(o[0].p*.04):0;S.cash+=g;notes.push(`👛 錢包竊取：${g?'從 '+esc(nameOf(o[0].key))+' 的持倉偷走 '+fmt(g)+'，轉成現金':'目標有防護，什麼都沒偷到'}`)}
     else if(k==='credstuff'){const n=othE.filter(e=>!isSh(e)&&e.c>=5000).length,g=n*1000;S.cash+=g;notes.push(`🔑 撞庫攻擊：${n} 人中招，入帳 ${fmt(g)}`)}
-    else if(k==='lockdown')notes.push(`🔒 支付 ${fmt(cost)} 凍結帳戶：對手本回合無法使用進倉牌`);
-    else if(k==='breach')notes.push(`🧨 支付 ${fmt(cost)} 擊穿防禦：對手本回合的防禦類牌失效`);
+    else if(k==='lockdown')notes.push(`🔒 凍結帳戶：對手本回合無法使用進倉牌`);
+    else if(k==='breach')notes.push(`🧨 擊穿防禦：對手本回合的防禦類牌失效`);
     else if(k==='honeypot'){const n=Math.min(3,othE.reduce((t,e)=>t+e.k.filter(x=>ATK.includes(x)).length,0)),g=n*1500;S.cash+=g;notes.push(`🍯 蜜罐陷阱：擋下 ${n} 張攻擊牌${g?'，入帳 '+fmt(g):''}`)}
     else if(k==='hijack'){const g=othE.filter(e=>!isSh(e)).reduce((t,e)=>t+fl100(e.p*.03),0);S.cash+=g;notes.push(`⛏️ 劫持算力：從對手持倉換得 ${fmt(g)}`)}
     else if(k==='exploit'){const n=Math.min(4,othE.filter(e=>!isSh(e)).reduce((t,e)=>t+e.k.filter(x=>x==='allin'||x==='lev'||x==='gambler').length,0)),g=n*2500;S.cash+=g;notes.push(`🐛 零時差漏洞：${n} 張高風險牌被收割，入帳 ${fmt(g)}`)}
     else if(k==='bounty'){const n=played.filter(x=>x!=='bounty'&&CARDS[x]&&CARDS[x].t==='tech').length,g=n*800;S.cash+=g;notes.push(`💰 賞金任務：${n} 張技術牌，入帳 ${fmt(g)}`)}
-    else if(k==='proxy'){S.cash+=800;notes.push(`🛰️ 代理跳板：入帳 ${fmt(800)}`)}
+    else if(k==='proxy'){S.cash+=1450;notes.push(`🛰️ 代理跳板：入帳 ${fmt(1450)}`)}
     else if(k==='socialeng'){const n=othE.filter(e=>!isSh(e)&&e.c+e.p>snapC+snapP).length,g=n*1000;S.cash+=g;notes.push(`🎭 社交工程：${n} 人上鉤，入帳 ${fmt(g)}`)}
-    else if(k==='ledger'){ledgerHit=true;notes.push(`📒 支付 ${fmt(cost)} 竄改帳本`)}
+    else if(k==='ledger'){ledgerHit=true;notes.push(`📒 竄改帳本`)}
     else if(k==='jackpot'){
       const n=1+othE.filter(e=>e.k.includes('jackpot')).length;
       if(n===1){S.cash+=6000;notes.push(`💣 獨占獎金！只有你打出，獲得 ${fmt(6000)}`)}
@@ -1455,7 +1456,7 @@ function stepRound(sel,hodl,tbl){
     else if(k==='comeback'){cbBehind=total()<START_CASH;notes.push(`🦅 現金 ${fmt(S.cash)} 全數買入持倉${cbBehind?'，Comeback 翻身模式':'，穩穩追擊'}`);S.pos+=S.cash;S.cash=0;cbH=true}
     else if(k==='dissbear'){dsH=true;notes.push('🐻‍❄️ 熊市 Diss：本月持倉與市場唱反調')}
     else if(k==='bullrun'){buy(OGK.bullBuy,'🐂 牛市衝鋒 買入');bullN++}
-    else if(k==='micdrop'){const a=S.pos;sell(1,'🔇 Mic Drop 離場 賣出');const b=a*OGK.micBonus;S.cash+=b;if(b>0)notes.push(`🔇 離場紅利 ${fmt(b)}`)}
+    else if(k==='micdrop'){const a=S.pos;sell(1,'🔇 Mic Drop 賣出');const b=a*OGK.micBonus;S.cash+=b;if(b>0)notes.push(`🔇 離場紅利 ${fmt(b)}`)}
     else if(k==='bearexit'){sell(OGK.exSell,'🏳️ 熊市撤退 賣出');S.cash+=OGK.exCash;notes.push(`🏳️ 撤退補貼 ${fmt(OGK.exCash)}`)}
     else if(k==='survivor'){svH=true;notes.push('🧗 312 倖存者：見過大風大浪')}
     else if(k==='royalty'){S.income=(S.income||0)+OGK.royalty;notes.push(`💿 專輯版稅：之後每個月月初入帳 ${fmt(OGK.royalty)}`)}
@@ -1474,7 +1475,9 @@ function stepRound(sel,hodl,tbl){
     else if(k==='platinum'){platHit=true;notes.push('💽 衝擊白金唱片')}
     else if(k==='bothways'){const bo=played.some(x=>x!=='bothways'&&BUY_K.includes(x)),so=played.some(x=>x!=='bothways'&&SELL_K.includes(x));if(bo&&so){S.cash+=OGK.both;notes.push(`🤝 敢拿敢放：入帳 ${fmt(OGK.both)}`)}else notes.push('🤝 敢拿敢放：進出倉沒湊齊')}
     else if(k==='hookr'){const n=played.filter(x=>x!=='hookr'&&CARDS[x]&&CARDS[x].t==='risk').length;if(n>0){S.cash+=OGK.hook*n;notes.push(`🪝 洗腦 Hook：${n} 張風險牌，入帳 ${fmt(OGK.hook*n)}`)}}
-    else if(k==='fakenews'||k==='garble'||k==='conspiracy'||k==='lag'){notes.push(MP.on?`${CARDS[k].e} ${CARDS[k].n}：其他玩家下個月的鏈上訊號被動了手腳`:`${CARDS[k].e} ${CARDS[k].n}：下個月的鏈上訊號將完全準確`)}
+    else if(k==='conspiracy'&&!MP.on){S.consp=(S.consp||[]).concat(S.round);notes.push('👽 陰謀論：從本回合結算起連續 5 個月入帳，每月多 $500')}
+    else if(k==='lag'&&!MP.on){notes.push(S.lastEv?'🕰️ 報導時差：無視原定事件，本月事件改為上個月的事件':'🕰️ 報導時差：還沒有上個月的事件，沒有效果')}
+    else if(k==='fakenews'||k==='garble'||k==='conspiracy'||k==='lag'){notes.push(MP.on?`${CARDS[k].e} ${CARDS[k].n}：其他玩家下個月的鏈上訊號被動了手腳`:k==='fakenews'?'📰 假新聞：本月漲幅若未超過 30%，實際盈利 ×2':'✂️ 斷章取義：本月跌幅若超過 30%，實際虧損 ×0.5')}
     else if(k==='forged'){if(MP.on)notes.push('🗂️ 偽造文件：其他玩家接下來 3 個月的事件預告全是假的');else{insider=true;notes.push('🗂️ 偽造文件：預知下個月的市場事件')}}
     else if(EV_K.includes(k)){notes.push(`${CARDS[k].e} ${CARDS[k].n}：下個月的市場事件將被影響`)}
     else if(k==='grant'){S.cash+=EK.grant;notes.push(`🎓 研究經費入帳 ${fmt(EK.grant)}`)}
@@ -1485,6 +1488,7 @@ function stepRound(sel,hodl,tbl){
     else if(k==='award'){awardHit=true;notes.push('🏆 提名學術獎項')}
     else if(k==='authority'){const n=played.filter(x=>INTERF.includes(x)).length;if(n>0){S.cash+=EK.auth*n;notes.push(`🧑‍🏫 權威加成：${n} 張干擾牌，入帳 ${fmt(EK.auth*n)}`)}}
     else if(k==='prophecy'){prophHit=true;notes.push('🔔 等待預言應驗')}
+    else if(k==='harvest'){harvestHit=true;notes.push('📤 背水收割：先結算本月持倉盈虧，再把全部持倉收回成現金')}
     else if(k==='swan'){swanHit=true;notes.push('🦢 發表黑天鵝預言')}
     else if(k==='patent'){S.cash+=EK.patentNow;S.bonus=(S.bonus||0)+EK.patentNext;notes.push(`💡 專利授權金入帳 ${fmt(EK.patentNow)}，下個月再入帳 ${fmt(EK.patentNext)}`)}
     else if(k==='cheer'){cheerSelf=true;notes.push(`🎉 支付 ${fmt(cost)} 請喊單造勢炒熱場子`)}
@@ -1498,7 +1502,7 @@ function stepRound(sel,hodl,tbl){
     if(worldSelf){worldSelf=false;notes.push('📡 世界觀被訊號干擾，失效')}
     if(analyst){analyst=false;notes.push('📡 鏈上分析師被訊號干擾，失效')}
   }
-  const cheerAny=cheerSelf||anyO('cheer'),paperAny=paperSelf||anyO('paper'),antiAny=antiSelf||anyO('anti'),spinAny=spinSelf||anyO('spin'),
+  const cheerAny=cheerSelf,paperAny=paperSelf||anyO('paper'),antiAny=antiSelf||anyO('anti'),spinAny=spinSelf||anyO('spin'),
       polAny=polSelf||anyO('politician'),smearAny=smearSelf||anyO('smear'),rerollAny=rerollSelf||anyO('reroll'),reliefAny=reliefSelf||anyO('relief');
   const revealNext=insider||pundit;
   let punditRes=null;
@@ -1515,8 +1519,9 @@ function stepRound(sel,hodl,tbl){
   if(svH&&p2<=-OGK.survThr)p2=-OGK.surv;if(hibOn&&p2<0)p2*=OGK.hibMul;
   if(gritOn&&p2>0){p2*=MK.grit;posNote+='💪 V型反轉，這個月漲幅 ×'+MK.grit+'<br>'}
   if(coldHit&&p2<0)p2*=.3;
-  if(encHit&&p2<0)p2=Math.max(p2,-.12);
+  if(encHit&&p2<0)p2=Math.max(p2,-.08);
   if(pumpHit&&p2>0)p2*=1.4;
+  if(!MP.on){if(played.includes('fakenews')&&pctM>0&&pctM<=.3&&p2>0)p2*=2;if(played.includes('garble')&&pctM<-.3&&p2<0)p2*=.5}
   const pctL=((svH&&pct<=-OGK.survThr)?-OGK.surv:pct)*mkF;
   if(S.pos>0){
     if(hedge){
@@ -1618,10 +1623,11 @@ function stepRound(sel,hodl,tbl){
     if(cycHit){const pu=S.idx.length<2||S.idx[S.idx.length-1]>=S.idx[S.idx.length-2];if(pu!==(pctM>=0)){S.cash+=OGK.cyc;posNote+=`<br>☯️ 牛熊輪迴，入帳 ${fmt(OGK.cyc)}`}}
     if(platHit&&total()>=OGK.platThr){S.cash+=OGK.plat;posNote+=`<br>💽 白金唱片！入帳 ${fmt(OGK.plat)}`}
     if(awardHit&&upM){S.cash+=EK.award;posNote+=`<br>🏆 獲得學術獎項，獎金 ${fmt(EK.award)}`}
-    if(prophHit&&S.revealed&&!S.fake){S.cash+=EK.prophecy;posNote+=`<br>🔔 預言應驗，獲得 ${fmt(EK.prophecy)}`}
+    if(prophHit){if(S.lastSig&&sigNow){if(sigNow===S.lastSig){S.cash+=EK.prophecy;posNote+=`<br>🔔 預言應驗：訊號與上個月相同，獲得 ${fmt(EK.prophecy)}`}else{take(500);posNote+=`<br>🔔 預言落空：訊號與上個月不同，損失 ${fmt(500)}`}}else posNote+='<br>🔔 預言應驗：沒有上個月的訊號可比對，沒有效果'}
     if(swanHit){const a=pctM<=-.2?EK.swanDn:pctM>=.2?EK.swanUp:0;if(a){S.cash+=a;posNote+=`<br>🦢 黑天鵝預言命中，獲得 ${fmt(a)}`}}
     if(againHit&&dnM){S.bonus=(S.bonus||0)+MK.again;posNote+='<br>🔁 補倉基金：下個月月初會有 '+fmt(MK.again)}}
-  if(S.hell&&mkRng((MP.seed^hashStr(S.key)^Math.imul(S.round,2654435761))>>>0)()<.75){S.cash+=100000;posNote+=`<br>🔥 <b>地獄加成</b>：月結算入帳 ${fmt(100000)}`}/* 地獄電腦：每月 75% 機率獲得 $100,000 現金 */
+  if(harvestHit&&S.pos>0){const a=S.pos;S.cash+=a;S.pos=0;posNote+=`<br>📤 <b>背水收割</b>：持倉 ${fmt(a)} 全數收回成現金`}
+  if(!MP.on&&S.consp&&S.consp.length){let g=0;S.consp=S.consp.filter(st=>{const n=S.round-st+1;if(n<1)return false;g+=500*n;return n<5});if(g>0){S.cash+=g;posNote+=`<br>👽 陰謀論收益入帳 ${fmt(g)}`}}
   S.idx.push(S.idx[S.idx.length-1]*(1+pctM));S.mine.push(total());
   if(!hodl){
     const keep=new Set();
@@ -1671,7 +1677,8 @@ function stepRound(sel,hodl,tbl){
   const sigNet=(hackHit&&panicHit)?null:(hackHit?'bull':(panicHit?'bear':null));
   const fateC=[];if(fateK)fateC.push([String(S.key),fateK]);othE.forEach(e=>{const f=e.k.find(x=>FATE[x]);if(f)fateC.push([String(e.key),f])});fateC.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);
   const posOp=posBefore>posMid+.5?1:(posBefore<posMid-.5?-1:0);
-  return{ev,pct:pctM,mktPL,tot0,loanPend,battle:battleRes,posOp,fateAny:fateC.length?fateC[0][1]:null,decreeAny:decreeSelf||anyO('decree'),notes,posNote,liquidated,revealNext,pundit:punditRes,blackAlpha,sigNet,polAny,smearAny,rerollAny,dshift,evK:EV_K.filter(x=>played.includes(x)||anyO(x)),sigOpp:(anyO('fakenews')?'opp':anyO('garble')?'noise':anyO('conspiracy')?'copp':anyO('lag')?'lag':null),soloSig:!MP.on&&played.some(x=>SIG_K.includes(x)),cheerAny,paperAny,antiAny,spinAny,endorse,world:worldSelf,analyst,foresight,flashIdx,swapped,invalid};
+  S.lastEv=ev;S.lastSig=sigNow;
+  return{ev,pct:pctM,mktPL,tot0,loanPend,battle:battleRes,posOp,fateAny:fateC.length?fateC[0][1]:null,decreeAny:decreeSelf||anyO('decree'),notes,posNote,liquidated,revealNext,pundit:punditRes,blackAlpha,sigNet,polAny,smearAny,rerollAny,dshift,evK:EV_K.filter(x=>played.includes(x)||anyO(x)),sigOpp:(anyO('fakenews')?'opp':anyO('garble')?'noise':anyO('conspiracy')?'copp':anyO('lag')?'lag':null),soloSig:false,cheerAny,paperAny,antiAny,spinAny,endorse,world:worldSelf,analyst,foresight,flashIdx,swapped,invalid};
 }
 /* 卡庫全部用完（牌庫與可回收的棄牌都空了）：不再強制補進出倉牌，只能觀望 */
 const deckDry=()=>!S.deck.length&&!(cr().recycle&&S.disc&&S.disc.length);
@@ -1767,6 +1774,8 @@ function simulate(key,log){
   finally{S=sv}
 }
 function prepFinalHand(){
+  let hv=S.hand.length>0&&S.R()<.5;/* 背水收割：最後一個月每個角色 50% 機率取代出倉卡的位置 */
+  if(hv){const i=S.hand.indexOf('exit');if(i>=0){S.hand[i]='harvest';hv=false}}
   /* 最後一個月「必定」沒有「出場」；仍保留進倉、出倉兩類型的牌 */
   const eh=k=>k==='hedge';
   S.reserve=S.reserve.filter(eh);
@@ -1787,6 +1796,7 @@ function prepFinalHand(){
     else S.hand.splice(i,1);
   }
   if(!deckDry())ensureHand(S.hand,S.deck,cr().ntl,cr().quota,S.disc);
+  if(hv&&!S.hand.includes('harvest')){let i=S.hand.findIndex(x=>x!=='harvest'&&SELL_K.includes(x)&&CARDS[x]&&CARDS[x].t==='fund');if(i<0)i=S.hand.findIndex(x=>x!=='harvest'&&SELL_K.includes(x));if(i>=0)S.hand[i]='harvest';else if(S.hand.length<S.hs+(S.big?2:0))S.hand.push('harvest')}
   sortBS(S.hand);
   S.reserve=[];
 }
@@ -1812,7 +1822,7 @@ setInterval(updateFA,250);
   new IntersectionObserver(es=>{const e=es[es.length-1];splitOut=!e.isIntersecting;updateFA()},{threshold:0}).observe(sp)})();
 function renderAssets(){
   const t=total();
-  const H=S.hx||{},MK_=H.mask>0,fq=v=>MK_?'$ ？':fmt(v);
+  const H=S.hx||{},MK_=H.mask>0,fq=v=>MK_?'？？？？？？':fmt(v);
   $('total').textContent=fmt(t);$('posV').textContent=fq(S.pos);$('cashV').textContent=fq(S.cash);$('faPos').textContent=fq(S.pos);$('faCash').textContent=fq(S.cash);
   const pr=t>0?S.pos/t*100:0;$('posBar').style.width=pr+'%';$('cashBar').style.width=(100-pr)+'%';
   const stl=[];
@@ -1829,7 +1839,7 @@ function renderAssets(){
   if(S.seized&&S.seized.length)stl.push(`🔐 牌庫被扣押 ${S.seized.length} 張（單月持倉獲利 ≥ $10,000 歸還）`);
   $('stLine').innerHTML=stl.map(x=>`<span>${x}</span>`).join('');$('stLine').style.display=stl.length?'':'none';
   const d=t-S.lastTotal,el=$('delta');
-  if(Math.abs(d)>=1){el.textContent=MK_?(d>0?'▲ +$ ？':'▼ -$ ？'):(d>0?'▲ +$':'▼ -$')+Math.round(Math.abs(d)).toLocaleString('en-US');el.className='delta mono '+(d>0?'up':'down')}
+  if(Math.abs(d)>=1){el.textContent=MK_?(d>0?'▲ ？？？？？？':'▼ ？？？？？？'):(d>0?'▲ +$':'▼ -$')+Math.round(Math.abs(d)).toLocaleString('en-US');el.className='delta mono '+(d>0?'up':'down')}
   else el.textContent='';
 }
 const CH_COL=['#4cc9f0','#ff6b9d','#7bd88f','#c084fc','#ff9f43','#e8e8e8','#9aa5ff'];
@@ -1870,7 +1880,7 @@ function renderSignal(){
   const ev=S.next;let html;
   if(S.revealed){const e2=S.fake||ev;html=`<b class="gold-t">${S.punditShown?'👨🏻‍💻 幣圈名嘴：':'🔮 內線消息：'}</b>${MONTHS[S.round-1]}將發生 <b>${e2.e} ${e2.n}</b>`}
   else{
-    const shown=S.sigFix||(MP.on?MP.sigs[S.round-1]:(S.sig||calcSig(ev,Math.random)));
+    const shown=S.sigFix||(MP.on?MP.sigs[S.round-1]:(S.sig||(S.sig=calcSig(ev,Math.random))));
     const map={bull:'<b class="bull">📈 看漲</b>，鯨魚錢包正在吸籌',bear:'<b class="bear">📉 看跌</b>，大量籌碼流入交易所',flat:'<b>😴 中性</b>，鏈上活動平淡',noise:'<b>🤔 訊號混亂</b>，多空分歧劇烈'};
     html=`🔗 本月鏈上訊號：${map[shown]}<br><span style="font-size:11px">（訊號僅供參考，每月有八成多機率給出方向，其方向準確率約五成，請自行做好風險管控）</span>`;
   }
@@ -1902,7 +1912,7 @@ function renderHand(anim){
     if(si<0&&keys.includes(k)&&!cr().dup)div.classList.add('locked');
     if(si<0&&COST[k]&&!conflict([...keys,k])&&!selFull(keys,k)&&!selOK([...keys,k],sp.c,sp.p))div.classList.add('locked','poor');
     if(c.t==='tech')div.classList.add('tech');
-    div.dataset.k=k;const cqOn=S.hx&&S.hx.cq>0;div.innerHTML=`<div class="ce"><i>${c.e}</i></div><div class="cn">${cqOn?'？':c.n}</div><div class="cd">${cqOn?'？':c.d}</div>`;
+    div.dataset.k=k;const cqOn=S.hx&&S.hx.cq>0;div.innerHTML=`<div class="ce"><i>${c.e}</i></div><div class="cn">${cqOn?'？？？？？？':c.n}</div><div class="cd">${cqOn?'？？？？？？':c.d}</div>`;
     if(handPending)div.classList.add('pre');
     div.onclick=()=>{
       if(S.busy)return;
@@ -1921,7 +1931,7 @@ function renderHand(anim){
       const real=d.dataset.k,id=i+':'+real;
       if(!S.hx.jm[id]){const pl=pool.filter(x=>x!==real&&CARDS[x].n!==CARDS[real].n),q=pl.length?pl:pool.filter(x=>x!==real);S.hx.jm[id]=q[Math.floor(Math.random()*q.length)]}
       const f=CARDS[S.hx.jm[id]];if(!f)return;
-      d.innerHTML=`<div class="ce"><i>${f.e}</i></div><div class="cn">${cqO?'？':f.n}</div><div class="cd">${cqO?'？':f.d}</div>`});
+      d.innerHTML=`<div class="ce"><i>${f.e}</i></div><div class="cn">${cqO?'？？？？？？':f.n}</div><div class="cd">${cqO?'？？？？？？':f.d}</div>`});
   }else if(S.hx&&S.hx.jm)S.hx.jm=null;
   if(!S.hand.length)handPending=false;
   if(!S.hand.length)h.innerHTML='<div class="empty-hand rise">牌庫已空，沒有可出的牌<br>只能選擇「觀望不出牌」</div>';
@@ -2261,12 +2271,12 @@ try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running')AC.resume().catch(()=>{})});
 function bootSolo(){leaveMP();boot();$('btnRestart').style.display='none'}
 function act(hodl){if(MP.on)mpSubmit(hodl);else settle(hodl)}
-function paintTimer(){const e=$('mpTimer');e.style.display='none';const t=$('lvTimer');if(!t)return;const tot=Math.max(1,tsec());t.style.display=(MP.on&&!MP.vsbot)?'':'none';$('lvNum').textContent=MP.tl;$('lvNum').setAttribute('font-size',String(MP.tl).length>2?'17':'22');$('lvRing').setAttribute('stroke-dasharray',Math.max(0,Math.min(100,MP.tl/tot*100))+' 100');t.classList.toggle('warn',MP.tl<=Math.min(10,Math.ceil(tot/3)))}
+function paintTimer(){const e=$('mpTimer');e.style.display='none';const t=$('lvTimer');if(!t)return;const tot=Math.max(1,tsec());t.style.display=(MP.on&&(!MP.vsbot||MP.vsTimer>0))?'':'none';$('lvNum').textContent=MP.tl;$('lvNum').setAttribute('font-size',String(MP.tl).length>2?'17':'22');$('lvRing').setAttribute('stroke-dasharray',Math.max(0,Math.min(100,MP.tl/tot*100))+' 100');t.classList.toggle('warn',MP.tl<=Math.min(10,Math.ceil(tot/3)))}
 function stopTimer(){clearInterval(MP.tm);MP.tm=null}
 function startTimer(){
   stopTimer();if(!MP.on)return;
-  if(MP.vsbot){botSchedule();return}/* 自訂模式沒有倒數計時 */
-  if(botList().length)botSchedule();/* 多人房間裡的電腦：在倒數期間隨機時間內出牌 */
+  if(MP.vsbot){botSchedule();if(!MP.vsTimer)return}/* 自訂模式：勾選「回合計時」才有倒數 */
+  else if(botList().length)botSchedule();/* 多人房間裡的電腦：在倒數期間隨機時間內出牌 */
   MP.tl=tsec();paintTimer();
   MP.tm=setInterval(()=>{
     if(!S||S.over||S.home||!MP.on){stopTimer();return}
@@ -2303,12 +2313,12 @@ function hostCheck(){
 }
 function leaveMP(){
   MP.live={};MP.hist={};liveUpdate();stopTimer();clearTimeout(MP.wt);try{if(MP.peer)MP.peer.destroy()}catch(e){}
-  clearTimeout(MP.cwt);Object.assign(MP,{live:{},chartDone:false,on:false,role:null,peer:null,hostConn:null,players:[],started:false,code:'',key:'',kc:0,hr:1,pending:null,mylog:[],vres:{},roster:[],ar:1,tgo:0,gateR:0,gateS:null,plays:{},careers:{},careerGo:false,myCareer:null,vsbot:false,vsStage:0,vsTok:0,endR:0,vsN:1,vsAuto:false,bk:1,diff:1,hell:[],endWho:''});SPEC.on=false;{const e=$('specOv');if(e)e.style.display='none';const f=$('bkOv');if(f)f.style.display='none'}clearTimeout(MP.gt);clearTimeout(MP.ct);clearTimeout(MP.cwt2);saCancel();$('careerOverlay').style.display='none';
+  clearTimeout(MP.cwt);Object.assign(MP,{vsTimer:0,live:{},chartDone:false,on:false,role:null,peer:null,hostConn:null,players:[],started:false,code:'',key:'',kc:0,hr:1,pending:null,mylog:[],vres:{},roster:[],ar:1,tgo:0,gateR:0,gateS:null,plays:{},careers:{},careerGo:false,myCareer:null,vsbot:false,vsStage:0,vsTok:0,endR:0,vsN:1,vsAuto:false,bk:1,diff:1,hell:[],endWho:''});SPEC.on=false;{const e=$('specOv');if(e)e.style.display='none';const f=$('bkOv');if(f)f.style.display='none'}clearTimeout(MP.gt);clearTimeout(MP.ct);clearTimeout(MP.cwt2);saCancel();$('careerOverlay').style.display='none';
   $('mpTimer').style.display='none';$('waitOverlay').style.display='none';
 }
 /* ===== 玩家 vs 電腦 ===== */
 /* 自訂模式：第一頁選電腦人數（總人數上限 8 人）與電腦角色的指定方式 */
-const CUS={n:1,auto:false,bk:1,diff:1};
+const CUS={n:1,auto:false,bk:1,diff:1,timer:false,sec:40};
 function startVsBot(){
   if(fading)return;
   fadeInto(()=>{leaveMP();$('startOverlay').style.display='none';customOpen()});
@@ -2320,22 +2330,26 @@ function customOpen(){
 <div class="cu-grid">${[1,2,3,4,5,6,7].map(n=>`<button class="cu-n${CUS.n===n?' sel':''}" data-n="${n}"><b>${n}</b><small>台電腦</small></button>`).join('')}</div>
 <div class="cu-sum">你 ＋ ${CUS.n} 台電腦 ＝ 共 ${CUS.n+1} 人</div>
 <div class="cu-lab">電腦的角色</div>
-<div class="cu-two"><button class="cu-a${CUS.auto?'':' sel'}" data-a="0">🎯 自行指定<small>逐台選擇</small></button><button class="cu-a${CUS.auto?' sel':''}" data-a="1">🎲 全部隨機<small>由系統抽選</small></button></div><div id="cuSet" class="st-wrap"></div>`;
+<div class="cu-two"><button class="cu-a${CUS.auto?'':' sel'}" data-a="0">🎯 自行指定<small>逐台選擇</small></button><button class="cu-a${CUS.auto?' sel':''}" data-a="1">🎲 全部隨機<small>由系統抽選</small></button></div><div id="cuSet" class="st-wrap"></div><div class="cu-lab">回合計時</div><div class="st-wrap" id="cuTm"><div class="st-box"><label class="st-chk"><input type="checkbox" id="cuTmChk" ${CUS.timer?'checked':''}><span>啟用每回合倒數計時</span></label><div class="cfg-sec cu-sec${CUS.timer?'':' off'}"><input id="cuSec" type="text" inputmode="numeric" maxlength="3" placeholder="40" autocomplete="off" value="${CUS.sec||''}" ${CUS.timer?'':'disabled'}><span>秒</span></div><div class="sec-hint">（上限不超過 999 秒）</div></div></div>`;
     setBox(box.querySelector('#cuSet'),CUS,null,true);
     box.querySelectorAll('.cu-n').forEach(b=>b.onclick=()=>{CUS.n=+b.dataset.n;try{sfx.click()}catch(e){}draw()});
     box.querySelectorAll('.cu-a').forEach(b=>b.onclick=()=>{CUS.auto=b.dataset.a==='1';try{sfx.click()}catch(e){}draw()});
+    const tc=box.querySelector('#cuTmChk'),si=box.querySelector('#cuSec'),sw=box.querySelector('.cu-sec');
+    tc.onchange=()=>{CUS.timer=tc.checked;si.disabled=!tc.checked;sw.classList.toggle('off',!tc.checked);try{sfx.click()}catch(e){}updNx()};
+    si.oninput=()=>{let v=si.value.replace(/\D/g,'').slice(0,3);if(+v>999)v='999';if(si.value!==v)si.value=v;CUS.sec=+v||0;updNx()};
   };
+  const updNx=()=>{const b=nav.querySelector('.nx');if(b)b.disabled=!!CUS.timer&&!(CUS.sec>=1&&CUS.sec<=999)};
   draw();
-  nav.innerHTML='<button class="home">🏠</button><button class="nx">下一步</button>';
+  nav.innerHTML='<button class="home">🏠</button><button class="nx">下一步</button>';updNx();
   nav.querySelector('.home').onclick=()=>{if(fading)return;fadeInto(()=>{$('cfgOverlay').style.display='none';goHome()},300)};
-  nav.querySelector('.nx').onclick=()=>{if(fading)return;fadeInto(()=>{$('cfgOverlay').style.display='none';customStart(CUS.n,CUS.auto)},300)};
+  nav.querySelector('.nx').onclick=()=>{if(fading)return;if(CUS.timer&&!(CUS.sec>=1&&CUS.sec<=999))return;fadeInto(()=>{$('cfgOverlay').style.display='none';customStart(CUS.n,CUS.auto)},300)};
   riseSel(['#cfgIn h2','#cfgIn .csub','#cfgIn .cu-grid','#cfgIn .cu-sum','#cfgIn .cu-lab','#cfgIn .cu-two','#cfgIn .st-wrap']);
 }
 function customStart(n,auto){
   n=Math.max(1,Math.min(7,n|0||1));
   leaveMP();
   const bk0=CUS.bk,df0=CUS.diff;
-  MP.role='host';MP.vsbot=true;MP.vsStage=0;MP.vsN=n;MP.vsAuto=!!auto;MP.vsTok=Math.random();MP.name=nick()||'玩家';MP.key='p0';MP.kc=n;
+  MP.role='host';MP.vsbot=true;MP.vsTimer=CUS.timer&&CUS.sec>=1&&CUS.sec<=999?CUS.sec:0;MP.vsStage=0;MP.vsN=n;MP.vsAuto=!!auto;MP.vsTok=Math.random();MP.name=nick()||'玩家';MP.key='p0';MP.kc=n;
   MP.players=[{id:'host',key:'p0',name:MP.name,ready:0,done:false,off:false}];
   for(let i=1;i<=n;i++)MP.players.push({id:'bot'+i,key:'p'+i,name:n===1?'電腦':'電腦'+i,bot:true,diff:df0,ready:0,done:false,off:false,log:[]});
   mpBegin(Math.floor(Math.random()*2147483647),df0===3?MP.players.filter(p=>p.bot).map(p=>p.key):[],bk0);
@@ -2376,6 +2390,7 @@ function botDecide(S0,diff){
   else{const sg=S0.sigFix||MP.sigs[S0.round-1];pu=sg==='bull'?.6:sg==='bear'?.4:.5}
   if(D===0&&Math.random()<.4)pu=.5;/* 簡單：常忽略訊號 */
   if(D>=2&&!S0.revealed)pu=pu>.5?.7:pu<.5?.3:.5;/* 困難以上：更相信訊號 */
+  if(D===3&&S0.next){const m=(S0.next.min+S0.next.max)/2;pu=m>.06?.95:m<-.06?.05:.5}/* 地獄：準確預知下個月的市場事件（不含漲跌幅） */
   const aggr=D>=2?Math.random()<(pu>=.55?.55:pu<=.45?.08:.3):Math.random()<.3;/* 普通：30% 激進、70% 穩健 */
   let T=aggr?(pu>=.55?1:pu<=.45?.35:.8):(pu>=.55?.6:pu<=.45?.15:.4);
   if(pu>=.8)T=aggr?1:.85;if(pu<=.2)T=aggr?.1:0;
@@ -2383,7 +2398,7 @@ function botDecide(S0,diff){
   if(D>=2){const left=ROUNDS-S0.round;if(left<=0)T=0;else if(left===1)T=Math.min(T,.25)}/* 困難以上：接近尾聲主動出倉換回現金（最終成績只算現金） */
   const items=[];
   /* 進出倉：選一張最接近目標持倉比例的牌 */
-  const bf={allin:1,big_buy:.6,dca:.5,small_buy:.2},sf={exit:1,big_sell:.6,tp:.5,small_sell:.2};
+  const bf={allin:1,big_buy:.6,dca:.5,small_buy:.2},sf={exit:1,harvest:1,big_sell:.6,tp:.5,small_sell:.2};
   let best=-1,bd=Math.abs(frac-T)-.06;
   hand.forEach((k,i)=>{
     if(LEVG.includes(k)||!CARDS[k]||CARDS[k].t!=='fund')return;
@@ -2489,7 +2504,7 @@ const DIFN=['簡單','普通','困難','地獄'],BKN=['未啟用','強制結算'
 /* 設定區塊：破產機制（勾選＋兩種處理方式）與電腦難度。st 需有 bk、diff 欄位；onchg 為變更後的回呼 */
 function setBox(el,st,onchg,showDiff){
   if(!el)return;
-  const DD=['常忽略訊號、很少出攻擊牌、偶爾直接觀望','穩健為主、偶爾激進','更相信訊號、積極使用攻擊與防禦牌','操作同「困難」，另外每個月有 75% 機率獲得 $100,000 現金'];
+  const DD=['常忽略訊號、很少出攻擊牌、偶爾直接觀望','穩健為主、偶爾激進','更相信訊號、積極使用攻擊與防禦牌','操作同「困難」，另外能準確預知下個月的市場事件（不含漲跌幅）'];
   const BD=['未啟用：資產低於 $100 也不會破產，所有人一路玩到最後','有玩家破產時，通知所有人並提前進入結算','破產者轉為觀戰，其他玩家不會收到任何通知，遊戲照常進行到結束'];
   const on=st.bk!==0;
   el.innerHTML=`<div class="st-box"><label class="st-chk"><input type="checkbox" ${on?'checked':''}><span>是否啟用破產機制？</span></label>${on?`<div class="st-two"><button data-b="1" class="${st.bk===1?'sel':''}">強制結算</button><button data-b="2" class="${st.bk===2?'sel':''}">繼續觀戰</button></div>`:''}<div class="st-note">${BD[st.bk]}</div></div>`+(showDiff?`<div class="st-box"><div class="st-lab">🤖 電腦難度</div><div class="st-four">${DIFN.map((n,i)=>`<button data-d="${i}" class="${st.diff===i?'sel':''}">${n}</button>`).join('')}</div><div class="st-note">${DD[st.diff]}</div></div>`:'');
@@ -2761,8 +2776,8 @@ function liveRender(){
   const fs=Math.max(13,Math.min(17,Math.floor(150/(rows.length*3.3))+4));
   if((MP.careers||{})[MP.key]==='tech'&&S){const me=rows.find(x=>x.k===MP.key);if(me){me.c=Math.round(S.cash);me.p=Math.round(S.pos);rows.sort((a,b)=>(b.c+b.p)-(a.c+a.p))}}
   el.style.fontSize=fs+'px';
-  const mineT=(CAREERS[(MP.careers||{})[MP.key]]&&(MP.careers||{})[MP.key]==='tech');
-  rb.innerHTML=rows.map(x=>`<div class="lr${x.k===MP.key?' me':''}${x.off?' off':''}"><div class="ln">${esc(x.n||'')}</div><div class="lv"><span class="lp${x.p<=0?' z':''}">${liveShort(x.p)}</span><span class="lc">${liveShort(x.c)}</span></div></div>`).join('');
+  const mineT=(CAREERS[(MP.careers||{})[MP.key]]&&(MP.careers||{})[MP.key]==='tech'),mkd=!!(S&&S.hx&&S.hx.mask>0);
+  rb.innerHTML=rows.map(x=>`<div class="lr${x.k===MP.key?' me':''}${x.off?' off':''}"><div class="ln">${esc(x.n||'')}</div><div class="lv"><span class="lp${x.p<=0&&!(mkd&&x.k===MP.key)?' z':''}">${mkd&&x.k===MP.key?'？？':liveShort(x.p)}</span><span class="lc">${mkd&&x.k===MP.key?'？？':liveShort(x.c)}</span></div></div>`).join('');
 }
 function liveGeo(){
   const el=$('livePanel'),h=el.offsetHeight||120,w=el.offsetWidth||120,cc=document.querySelector('.chart-card'),sp=document.querySelector('.split');
@@ -2984,19 +2999,19 @@ function cfgGo(d){
   if(!CFG[P.key])return;
   if(cfgPage<n){fadeInto(()=>cfgOpen(cfgPage+1),300);return}
   /* 開始遊戲 */
-  const c=applyCfg({rounds:CFG.rounds,cash:CFG.cash,sec:CFG.sec});
+  const c=applyCfg({rounds:CFG.rounds,cash:CFG.cash,sec:(MP.vsbot&&MP.vsTimer>0)?MP.vsTimer:CFG.sec});
   if(careerMode==='solo'){CUR_CAREER=CFG.career;fadeInto(()=>{$('cfgOverlay').style.display='none';showChart(bootSolo)},300);return}
   mpCfgDone(c);
 }
 /* ===== 角色介紹 ===== */
 const CI={
-std:{str:[4.5, 9.1],desc:"22 歲的幣圈散戶，韓系穿搭、一頭設計過的自然捲短髮，活潑陽光，什麼新鮮事都想試試看。牌庫一半是進出倉基本功，另一半是專屬的冒險牌：被動收入、山寨幣探險、IPO 申購、翻身槓桿。跌倒了也不氣餒，下個月照樣笑著翻盤。手牌五張，每月最多出三張。",an:"Mike 的強在<b>不怕摔</b>。開局先打<b>被動收入</b>，之後每個月固定進帳，等於替整場遊戲墊高底線；上個月虧損的話，手上多張<b>進倉牌</b>就搭<b>成交量放大</b>，每張進倉牌都再賺一筆。行情下跌時別慌，<b>補倉基金</b>與<b>接飛刀</b>會把虧損變成下個月的本錢，<b>V型反轉</b>再讓反彈漲幅 ×1.5，跌得越深、彈得越高。資產落後時，用<b>翻身槓桿</b>或<b>山寨幣探險</b>賭一把翻盤；領先時就別貪，收斂成穩定出牌。接近結算前記得先<b>出場</b>，持倉不計入成績。同名牌每回合只能出一張，所以手牌盡量湊出不同種類，才能把每個月的名額用滿。新手建議的節奏是：前期先鋪被動收入與補倉基金，中期依訊號加減碼，後期一旦領先就逐步收手，把現金留在手上。玩得好的關鍵不是賺最多，而是讓每一次下跌都有對應的補救牌，這樣即使連續兩個月看錯，也不會被打出局。",st:{mean:60043,med:47871,p10:15152,p90:125687,max:352503,bk:8,o1:181,o10:32,win:162},q:['嗨！我是Mike，一起闖吧！','我是Mike，專門挑戰不可能！','人生嘛，就是要敢衝一次！']},
-wild:{str:[3, 3],desc:"遊走在崩盤邊緣的荒野賭客，牌庫塞滿開槓桿、亡命賭徒、高額試險與高額逃跑，一把梭哈能翻倍，一次看走眼也可能歸零。靠借貸與復活幣撐場，比的就是膽識與時機。",an:"Jason 是<b>高風險高報酬</b>的角色，成敗取決於「何時下重注」。只在<b>鏈上訊號看漲或內線消息確認</b>時才開槓桿，亡命賭徒更要留給明確的大行情，不要拿來碰運氣；看不準的月份就用<b>高額逃跑</b>先落袋，寧可少賺也別被洗出場。<b>復活幣與理賠條款</b>是保命底牌，手上有槓桿牌時務必先備好，一旦爆倉才有機會回到牌桌。借貸可以快速補子彈，但兩個月內要還款，打出前先算好現金流，別讓還款日剛好撞上大跌。最重要的是不要連續梭哈：贏一次就把部分獲利換成現金，破產一次就前功盡棄。另外，Jason 的牌庫槓桿牌很多，同名牌每回合只能出一張，建議把不同的高風險牌分散在不同月份，而不是擠在同一個月。只要守住「看準才下重注、看不準就收手」，這個角色的爆發力足以在後半段一口氣超車。",st:{mean:21524,med:15116,p10:791,p90:45977,max:246692,bk:21,o1:129,o10:3,win:null},q:['我，專挑刺激的局。','安全牌？那不是我的玩法。','籌碼夠大，故事才精彩。']},
-scholar:{str:[4.3, 8.6],desc:"50 歲的學者與新聞發言人，謹言慎行、滿腹經綸的幣圈老投客。他不靠蠻力，靠話語權：假新聞、斷章取義、歷史重演、國際峰會，一句話就能牽動市場與其他玩家的判斷。牌庫有十五張專屬的資訊干擾牌，再搭配研究經費、講座邀約與大膽假設。手牌五張，每月最多出三張。",an:"Eric 的強在<b>話語權</b>。開局先用<b>講座邀約</b>與<b>研究經費</b>墊高本金，穩住現金流，再靠<b>內線消息</b>看見下個月的行情；看得到方向後，用<b>歷史週期、政權交替、央行聲明</b>把行情推向有利於自己的方向，<b>假新聞、斷章取義</b>則讓對手的訊號失準，手上有幾張干擾牌，就能同時掌握自己的情報與對手的判斷。每打出一張干擾牌，<b>權威加成</b>與<b>專欄稿費</b>都會發錢，所以干擾牌不只是攻擊，也是收入來源。需要翻盤時，<b>大膽假設</b>的漲幅 ×4，是追分的主力。要注意這些改寫行情的牌對所有玩家都有效，包含自己，出牌前先確認下個月的走向對你是否有利。接近結算記得出場，持倉不計入成績。同名牌每回合只能出一張。如果是多人對戰，優先替自己的訊號與行情配對，再考慮干擾對手；單人時則把重心放在穩定收入與預知行情。想拿高分的玩家，別忽略每個月的小額稿費與經費，累積到後期往往比一次大賭更有效。",st:{mean:45309,med:36616,p10:13452,p90:89016,max:238301,bk:7,o1:178,o10:20,win:152},q:['我只為觀點提供證據。','市場喧鬧，我習慣讀懂沉默。','結論之前，先尊重事實。']},
-og:{str:[5.5, 8.6],desc:"混跡幣圈多年的老投客兼嘻哈歌手，約 35 歲，常戴著帽子、一身饒舌風，敢拿敢放、胸有成竹。內線消息先看一步，再靠 Freestyle 全倉、Comeback 翻身、熊市 Diss 這類高倍槓桿翻盤，牛熊都能唱成自己的歌。手牌五張，每月最多出三張。",an:"Big OG 的強在<b>見過大風大浪</b>。開局先用<b>專輯版稅</b>與<b>巡迴演唱</b>墊高本金，讓每個月都有固定現金進帳；<b>內線消息</b>看到下個月再決定出手：看漲就用<b>牛市衝鋒</b>、<b>Freestyle 全倉</b>放大獲利，看跌就改用<b>熊市 Diss</b>或<b>熊市撤退</b>，把下跌也變成機會。資產落後時，<b>Comeback 翻身</b>是翻盤的關鍵，越落後倍率越誇張；<b>敢拿敢放</b>、<b>Cypher 圈圈</b>都要出滿三張牌才最划算，所以每個月的出牌數要事先規劃。高倍槓桿的報酬大、風險也大，手上若有保命牌就先打出再下重注，別連續兩個月把全部現金押進去。接近結算記得先<b>出場</b>，持倉不計入成績。同名牌每回合只能出一張。推薦的流程是：前期靠版稅與巡迴穩定現金，中期用內線消息挑出最有把握的月份重倉，後期視排名選擇保守出場或繼續翻盤。這個角色的上限很高，但每一次重倉都要確認自己有退路，否則一次爆倉就可能前功盡棄。",st:{mean:69403,med:49573,p10:0,p90:155730,max:1203423,bk:23,o1:160,o10:39,win:148},q:['老市場的新節拍，就是我','我押的不是運氣，是眼界。','別追浪，我通常就在浪前面。']},
-bunny:{str:[6.3, 9.3],desc:"聰明又有主見的大眼睛治療師，黑長髮綁成微捲馬尾，做事一定先規劃再執行。牌庫以穩健的資金調度為底，搭配盲盒存錢筒、迪士尼優惠券、復健計畫等精打細算的小技巧，偶爾綁上米妮蝴蝶結開個小槓桿，俏皮中帶著小新式的倔強。",an:"<b>穩穩賺、偶爾衝</b>是她的節奏。<b>盲盒存錢筒、盲盒開箱、感統訓練、小新耍賴</b>都是一般出牌，每月只有三個名額，所以要挑最划算的組合。手上有現金時，<b>盲盒存錢筒</b>最划算，現金越多利息越多；持倉要吃漲幅時搭配<b>感統訓練</b>，把行情的上漲變成額外獲利。訊號看漲才綁上<b>米妮蝴蝶結</b>放大報酬，看跌就改打<b>復健計畫</b>與出倉牌守住成果，不要為了出牌而出牌。<b>治療紀錄表</b>要湊滿三張牌才有獎金，所以每個月先規劃好要打哪三張，再決定先後順序。整體策略是靠小優勢慢慢累積，不需要大賭也能穩定領先。遇到連續下跌的月份，不要硬撐持倉，先守住現金，再等訊號轉好時一口氣回補。她的強項不是單月爆發，而是每個月都比別人多拿一點，累積到最後就是明顯的差距",st:{mean:61506,med:53155,p10:19508,p90:114593,max:219450,bk:0,o1:194,o10:37,win:178},q:['嗨呀～叫我蘇蘇就可以囉♡','人生很短，要收集可愛呀！','努力賺錢，也努力好好生活♡']},
-tech:{str:[3.3, 5.9],desc:"藏在螢幕後的技術流玩家，沉默、低調、有耐心。每月手牌 5 張、最多出 3 張，專攻網路入侵與資訊侵略：遮蔽對手的資產與手牌、扣押牌庫、癱瘓出牌、竊取現金與持倉。單人模式沒有對手可駭，改靠冷錢包、加密隧道擋住跌幅，並竄改數據、植入後門、竊取漏洞賞金讓戰局偏向自己。",an:"Albert 的優勢是<b>手牌可同時握多張技術牌</b>，而且多人與單人的打法完全不同。多人時每月最多出 3 張，所以要先想清楚這個月的目標：想擾亂對手，就用<b>暗網迷霧、亂碼注入、釣魚偽裝</b>讓他們看不到自己的資產與手牌，再以<b>DDoS 封鎖、流量洪水、勒索軟體</b>癱瘓領先者的出牌與牌庫；想直接賺錢，<b>錢包竊取、撞庫攻擊、劫持算力</b>會把對手的錢搬進自己口袋，<b>蜜罐陷阱</b>則把對手的攻擊變成收入，所以被盯上時別急著防禦，反而可能賺更多。<b>中間人攻擊</b>能讓對手的進出倉全部相反，打在對手重押的那個月最致命。單人時沒有對手可駭，每月同樣最多出 3 張：<b>冷錢包與加密隧道</b>擋下跌，<b>異地備份</b>事後補損，<b>挖礦木馬與植入後門</b>慢慢累積收入，越早打越划算，<b>竄改數據</b>把下個月行情往上推，<b>拉盤腳本與搶先交易</b>在上漲月放大獲利。無論哪個模式，先確保手上有進倉與出倉牌，再用技術牌鋪出優勢。補充提醒：多人局裡，別在同一個月把兩張攻擊牌都用在同一種效果上，錯開時機才能讓對手一直處於被干擾的狀態；單人局則要記得，擋跌牌需要先付費，現金不足時就先打收入牌再補防禦。技術牌的威力在於持續累積，越早布局，後面越輕鬆。",st:{mean:27804,med:24086,p10:11622,p90:47050,max:145283,bk:3,o1:182,o10:2,win:139},q:['Albert，名字知道就夠了。','我習慣待在看不見的地方。','別找我，我會先找到你。']}
-,tycoon:{str:[8.3, 9.8],desc:"手握一言堂的商界大亨，牌庫一百零一張全是專屬招式：自己畫K線、指定下個月的市場事件、行政命令、關稅大棒、否決權，連對手的月初現金都要抽成。手牌十張且每回合拿到的手牌不會重複，每月最多出四張。精打細算，永遠算得比別人多一步。",an:"<b>D.T. 幾乎不會輸</b>。每月最多四張，先用<b>簽約建倉或豪賭擴張</b>進場，再以<b>自己畫K線</b>把下跌變成上漲，<b>一言堂</b>翻倍收益，讓他一個人就能決定行情的走向。<b>關稅大棒與否決權</b>壓制對手，把別人的現金與出牌權變成自己的籌碼，<b>銅牆鐵壁</b>則擋下別人對他的攻擊，攻守兼備。<b>必然事件牌</b>能指定下個月的行情，<b>私人金庫</b>補足現金，<b>精算帳本與內部審計</b>把每張牌都換成利潤，打得越多賺得越多。牌多不等於要全出，先想好本月的主軸，再用剩下的名額補強。同名牌每回合只能出一張，記得搭配不同招式，才能把四個名額都用得有價值。新手容易一開始就全力出牌，建議先觀察一兩個月的行情，找到最能放大收益的組合，再用必然事件牌把行情固定下來。只要手上永遠留著一張攻擊牌與一張防禦牌，就算遇到強勢對手也有辦法反制，穩穩把領先優勢守到最後。",st:{mean:1198613,med:647856,p10:135866,p90:2943204,max:14693512,bk:0,o1:195,o10:132,win:194},q:['我只談能成交的方案。','規則可以談，利益不能讓。','跟我上桌，就準備談筆大的。']}
+std:{str:[6.0, 6.6],desc:"22 歲的幣圈散戶，韓系穿搭、一頭設計過的自然捲短髮，活潑陽光，什麼新鮮事都想試試看。牌庫一半是進出倉基本功，另一半是專屬的冒險牌：被動收入、山寨幣探險、IPO 申購、翻身槓桿。跌倒了也不氣餒，下個月照樣笑著翻盤。手牌五張，每月最多出三張。",an:"Mike 的強在<b>不怕摔</b>。開局先打<b>被動收入</b>，之後每個月固定進帳，等於替整場遊戲墊高底線；上個月虧損的話，手上多張<b>進倉牌</b>就搭<b>成交量放大</b>，每張進倉牌都再賺一筆。行情下跌時別慌，<b>補倉基金</b>與<b>接飛刀</b>會把虧損變成下個月的本錢，<b>V型反轉</b>再讓反彈漲幅 ×1.5，跌得越深、彈得越高。資產落後時，用<b>翻身槓桿</b>或<b>山寨幣探險</b>賭一把翻盤；領先時就別貪，收斂成穩定出牌。接近結算前記得先<b>出場</b>，持倉不計入成績。同名牌每回合只能出一張，所以手牌盡量湊出不同種類，才能把每個月的名額用滿。新手建議的節奏是：前期先鋪被動收入與補倉基金，中期依訊號加減碼，後期一旦領先就逐步收手，把現金留在手上。玩得好的關鍵不是賺最多，而是讓每一次下跌都有對應的補救牌，這樣即使連續兩個月看錯，也不會被打出局。",st:{mean:38798,med:29373,p10:6881,p90:85859,max:434074,bk:15,o1:139,o10:17},q:['嗨！我是Mike，一起闖吧！','我是Mike，專門挑戰不可能！','人生嘛，就是要敢衝一次！']},
+wild:{str:[3, 3],desc:"遊走在崩盤邊緣的荒野賭客，牌庫塞滿開槓桿、亡命賭徒、高額試險與高額逃跑，一把梭哈能翻倍，一次看走眼也可能歸零。靠借貸與復活幣撐場，比的就是膽識與時機。",an:"Jason 是<b>高風險高報酬</b>的角色，成敗取決於「何時下重注」。只在<b>鏈上訊號看漲或內線消息確認</b>時才開槓桿，亡命賭徒更要留給明確的大行情，不要拿來碰運氣；看不準的月份就用<b>高額逃跑</b>先落袋，寧可少賺也別被洗出場。<b>復活幣與理賠條款</b>是保命底牌，手上有槓桿牌時務必先備好，一旦爆倉才有機會回到牌桌。借貸可以快速補子彈，但兩個月內要還款，打出前先算好現金流，別讓還款日剛好撞上大跌。最重要的是不要連續梭哈：贏一次就把部分獲利換成現金，破產一次就前功盡棄。另外，Jason 的牌庫槓桿牌很多，同名牌每回合只能出一張，建議把不同的高風險牌分散在不同月份，而不是擠在同一個月。只要守住「看準才下重注、看不準就收手」，這個角色的爆發力足以在後半段一口氣超車。",st:{mean:16299,med:7743,p10:0,p90:40289,max:446587,bk:71,o1:81,o10:5,win:null},q:['我，專挑刺激的局。','安全牌？那不是我的玩法。','籌碼夠大，故事才精彩。']},
+scholar:{str:[3.8, 5.3],desc:"50 歲的學者與新聞發言人，謹言慎行、滿腹經綸的幣圈老投客。他不靠蠻力，靠話語權：假新聞、斷章取義、歷史重演、國際峰會，一句話就能牽動市場與其他玩家的判斷。牌庫有十五張專屬的資訊干擾牌，再搭配研究經費、講座邀約與大膽假設。手牌五張，每月最多出三張。",an:"Eric 的強在<b>話語權</b>。開局先用<b>講座邀約</b>與<b>研究經費</b>墊高本金，穩住現金流，再靠<b>內線消息</b>看見下個月的行情；看得到方向後，用<b>歷史週期、政權交替、央行聲明</b>把行情推向有利於自己的方向，<b>假新聞、斷章取義</b>則讓對手的訊號失準，手上有幾張干擾牌，就能同時掌握自己的情報與對手的判斷。每打出一張干擾牌，<b>權威加成</b>與<b>專欄稿費</b>都會發錢，所以干擾牌不只是攻擊，也是收入來源。需要翻盤時，<b>大膽假設</b>的漲幅 ×4，是追分的主力。要注意這些改寫行情的牌對所有玩家都有效，包含自己，出牌前先確認下個月的走向對你是否有利。接近結算記得出場，持倉不計入成績。同名牌每回合只能出一張。如果是多人對戰，優先替自己的訊號與行情配對，再考慮干擾對手；單人時則把重心放在穩定收入與預知行情。想拿高分的玩家，別忽略每個月的小額稿費與經費，累積到後期往往比一次大賭更有效。",st:{mean:48722,med:35703,p10:3835,p90:121931,max:785763,bk:20,o1:132,o10:22},q:['我只為觀點提供證據。','市場喧鬧，我習慣讀懂沉默。','結論之前，先尊重事實。']},
+og:{str:[5.2, 6.3],desc:"混跡幣圈多年的老投客兼嘻哈歌手，約 35 歲，常戴著帽子、一身饒舌風，敢拿敢放、胸有成竹。內線消息先看一步，再靠 Freestyle 全倉、Comeback 翻身、熊市 Diss 這類高倍槓桿翻盤，牛熊都能唱成自己的歌。手牌五張，每月最多出三張。",an:"Big OG 的強在<b>見過大風大浪</b>。開局先用<b>專輯版稅</b>與<b>巡迴演唱</b>墊高本金，讓每個月都有固定現金進帳；<b>內線消息</b>看到下個月再決定出手：看漲就用<b>牛市衝鋒</b>、<b>Freestyle 全倉</b>放大獲利，看跌就改用<b>熊市 Diss</b>或<b>熊市撤退</b>，把下跌也變成機會。資產落後時，<b>Comeback 翻身</b>是翻盤的關鍵，越落後倍率越誇張；<b>敢拿敢放</b>、<b>Cypher 圈圈</b>都要出滿三張牌才最划算，所以每個月的出牌數要事先規劃。高倍槓桿的報酬大、風險也大，手上若有保命牌就先打出再下重注，別連續兩個月把全部現金押進去。接近結算記得先<b>出場</b>，持倉不計入成績。同名牌每回合只能出一張。推薦的流程是：前期靠版稅與巡迴穩定現金，中期用內線消息挑出最有把握的月份重倉，後期視排名選擇保守出場或繼續翻盤。這個角色的上限很高，但每一次重倉都要確認自己有退路，否則一次爆倉就可能前功盡棄。",st:{mean:37647,med:24491,p10:0,p90:84169,max:602597,bk:55,o1:119,o10:16},q:['老市場的新節拍，就是我','我押的不是運氣，是眼界。','別追浪，我通常就在浪前面。']},
+bunny:{str:[6.7, 7.6],desc:"聰明又有主見的大眼睛治療師，黑長髮綁成微捲馬尾，做事一定先規劃再執行。牌庫以穩健的資金調度為底，搭配盲盒存錢筒、迪士尼優惠券、復健計畫等精打細算的小技巧，偶爾綁上米妮蝴蝶結開個小槓桿，俏皮中帶著小新式的倔強。",an:"<b>穩穩賺、偶爾衝</b>是她的節奏。<b>盲盒存錢筒、盲盒開箱、感統訓練、小新耍賴</b>都是一般出牌，每月只有三個名額，所以要挑最划算的組合。手上有現金時，<b>盲盒存錢筒</b>最划算，現金越多利息越多；持倉要吃漲幅時搭配<b>感統訓練</b>，把行情的上漲變成額外獲利。訊號看漲才綁上<b>米妮蝴蝶結</b>放大報酬，看跌就改打<b>復健計畫</b>與出倉牌守住成果，不要為了出牌而出牌。<b>治療紀錄表</b>要湊滿三張牌才有獎金，所以每個月先規劃好要打哪三張，再決定先後順序。整體策略是靠小優勢慢慢累積，不需要大賭也能穩定領先。遇到連續下跌的月份，不要硬撐持倉，先守住現金，再等訊號轉好時一口氣回補。她的強項不是單月爆發，而是每個月都比別人多拿一點，累積到最後就是明顯的差距",st:{mean:41837,med:35644,p10:12024,p90:78758,max:339992,bk:0,o1:155,o10:19},q:['嗨呀～叫我蘇蘇就可以囉♡','人生很短，要收集可愛呀！','努力賺錢，也努力好好生活♡']},
+tech:{str:[1.5, 2.6],desc:"藏在螢幕後的技術流玩家，沉默、低調、有耐心。每月手牌 5 張、最多出 3 張，專攻網路入侵與資訊侵略：遮蔽對手的資產與手牌、扣押牌庫、癱瘓出牌、竊取現金與持倉。單人模式沒有對手可駭，改靠冷錢包、加密隧道擋住跌幅，並竄改數據、植入後門、竊取漏洞賞金讓戰局偏向自己。",an:"Albert 的優勢是<b>手牌可同時握多張技術牌</b>，而且多人與單人的打法完全不同。多人時每月最多出 3 張，所以要先想清楚這個月的目標：想擾亂對手，就用<b>暗網迷霧、亂碼注入、釣魚偽裝</b>讓他們看不到自己的資產與手牌，再以<b>DDoS 封鎖、流量洪水、勒索軟體</b>癱瘓領先者的出牌與牌庫；想直接賺錢，<b>錢包竊取、撞庫攻擊、劫持算力</b>會把對手的錢搬進自己口袋，<b>蜜罐陷阱</b>則把對手的攻擊變成收入，所以被盯上時別急著防禦，反而可能賺更多。<b>中間人攻擊</b>能讓對手的進出倉全部相反，打在對手重押的那個月最致命。單人時沒有對手可駭，每月同樣最多出 3 張：<b>冷錢包與加密隧道</b>擋下跌，<b>異地備份</b>事後補損，<b>挖礦木馬與植入後門</b>慢慢累積收入，越早打越划算，<b>竄改數據</b>把下個月行情往上推，<b>拉盤腳本與搶先交易</b>在上漲月放大獲利。無論哪個模式，先確保手上有進倉與出倉牌，再用技術牌鋪出優勢。補充提醒：多人局裡，別在同一個月把兩張攻擊牌都用在同一種效果上，錯開時機才能讓對手一直處於被干擾的狀態；單人局則要記得，擋跌牌需要先付費，現金不足時就先打收入牌再補防禦。技術牌的威力在於持續累積，越早布局，後面越輕鬆。",st:{mean:13810,med:11064,p10:3327,p90:28374,max:124678,bk:40,o1:99,o10:1},q:['Albert，名字知道就夠了。','我習慣待在看不見的地方。','別找我，我會先找到你。']}
+,tycoon:{str:[8.2, 8.7],desc:"手握一言堂的商界大亨，牌庫一百零一張全是專屬招式：自己畫K線、指定下個月的市場事件、行政命令、關稅大棒、否決權，連對手的月初現金都要抽成。手牌十張且每回合拿到的手牌不會重複，每月最多出四張。精打細算，永遠算得比別人多一步。",an:"<b>D.T. 幾乎不會輸</b>。每月最多四張，先用<b>簽約建倉或豪賭擴張</b>進場，再以<b>自己畫K線</b>把下跌變成上漲，<b>一言堂</b>翻倍收益，讓他一個人就能決定行情的走向。<b>關稅大棒與否決權</b>壓制對手，把別人的現金與出牌權變成自己的籌碼，<b>銅牆鐵壁</b>則擋下別人對他的攻擊，攻守兼備。<b>必然事件牌</b>能指定下個月的行情，<b>私人金庫</b>補足現金，<b>精算帳本與內部審計</b>把每張牌都換成利潤，打得越多賺得越多。牌多不等於要全出，先想好本月的主軸，再用剩下的名額補強。同名牌每回合只能出一張，記得搭配不同招式，才能把四個名額都用得有價值。新手容易一開始就全力出牌，建議先觀察一兩個月的行情，找到最能放大收益的組合，再用必然事件牌把行情固定下來。只要手上永遠留著一張攻擊牌與一張防禦牌，就算遇到強勢對手也有辦法反制，穩穩把領先優勢守到最後。",st:{mean:153254,med:87383,p10:26818,p90:356377,max:4102378,bk:13,o1:150,o10:74},q:['我只談能成交的方案。','規則可以談，利益不能讓。','跟我上桌，就準備談筆大的。']}
 };
 const CI_ORDER=['std','wild','scholar','og','tech','bunny','tycoon'];
 const CI_BASE=CI.wild.st;
@@ -3210,7 +3225,7 @@ const HELP_PAGES=[
   <p>每個月：看訊號 → 依角色規則選牌（手牌區上方會顯示可出張數）→ 按「進場結算」。</p>
   <p>⚠️ <b>最重要的規則：最終成績只算「現金」。</b>最後一個月結算時，還留在持倉部位的錢<b>一毛都不列入成績</b>，所以最後幾個月要記得把持倉出倉換回現金。最後 3 個月開場會跳出警告提醒你。</p>
   <p>資產低於 $100 會提前破產。</p>`},
- {t:'成績怎麼算？與稱號',h:()=>`<div class="hcard"><div class="n">⚠️ 持倉部位不列入成績</div><div class="d">最後一個月結算後，<b>成績 = 現金</b>（定存本息算現金、未還完的借款要扣掉）。仍在持倉部位的金額不會計分，也不會自動賣出。<br>例：結算後現金 $8,000、持倉 $20,000，成績只有 <b>$8,000</b>。</div><div class="hnote">遊戲中畫面上的「總資產」包含持倉，僅供判斷參考；最後 3 個月請提早出倉，把獲利落袋。結算時會先顯示總結數據分析，再顯示成績與稱號。稱號門檻以起始資金 $10,000 為基準，其他起始資金會等比換算。</div></div>`+TITLES.map((t,i)=>`<div class="hrow"><span>${t.e} ${t.t}</span><span class="mono">${i<TITLES.length-1?'$'+t.min.toLocaleString('en-US')+' 以上':'低於 $100'}</span></div>`).join('')},
+ {t:'成績怎麼算？與稱號',h:()=>`<div class="hcard"><div class="n">⚠️ 持倉部位不列入成績</div><div class="d">最後一個月結算後，<b>成績 = 現金</b>（定存本息算現金、未還完的借款要扣掉）。仍在持倉部位的金額不會計分，也不會自動賣出。<br>例：結算後現金 $8,000、持倉 $20,000，成績只有 <b>$8,000</b>。</div><div class="hnote">遊戲中畫面上的「總資產」包含持倉，僅供判斷參考；最後 3 個月請提早出倉，把獲利落袋。最後一個月每個角色有 50% 機率拿到「📤 背水收割」，取代出倉卡的位置：月底先照出牌順序算完持倉盈虧，再把全部持倉收回成現金。結算時會先顯示總結數據分析，再顯示成績與稱號。稱號門檻以起始資金 $10,000 為基準，其他起始資金會等比換算。</div></div>`+TITLES.map((t,i)=>`<div class="hrow"><span>${t.e} ${t.t}</span><span class="mono">${i<TITLES.length-1?'$'+t.min.toLocaleString('en-US')+' 以上':'低於 $100'}</span></div>`).join('')},
  {t:'效果牌介紹',h:()=>CARD_BASE.map(k=>CARDS[k]).map(c=>`<div class="hcard"><div class="n">${c.e} ${c.n}</div><div class="d">${c.d}</div>${c.note?`<div class="hnote">${c.note}</div>`:''}</div>`).join('')+'<div class="hnote">遊戲中可能另外出現其他種類的牌，此說明僅供參考</div>'},
  {t:'市場事件介紹',h:()=>EVENTS.map(ev=>`<div class="hrow"><span>${ev.e} ${ev.n}</span><span class="mono ${ev.max>0&&ev.min>=0?'up-t':(ev.max<=0?'down-t':'')}">${pctR(ev.min)} ～ ${pctR(ev.max)}</span></div>`).join('')},
  {t:'關於鏈上訊號',h:()=>`<p>每個月結算前，事件區會顯示一則訊號：</p>
